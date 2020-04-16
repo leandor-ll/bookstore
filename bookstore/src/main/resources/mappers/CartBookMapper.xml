@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.CartBookMapper">
+  <resultMap id="BaseResultMap" type="com.book.domain.CartBook">
+    <result column="suid" jdbcType="VARCHAR" property="suid" />
+    <result column="sbid" jdbcType="VARCHAR" property="sbid" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+    <result column="sprice" jdbcType="INTEGER" property="sprice" />
+    <result column="snumber" jdbcType="INTEGER" property="snumber" />
+    <result column="spic" jdbcType="VARCHAR" property="spic" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    suid, sbid, sname, sprice, snumber, spic
+  </sql>
+  <select id="selectByExample" parameterType="com.book.domain.CartBookExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from s_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.book.domain.CartBookExample">
+    delete from s_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.book.domain.CartBook">
+    insert into s_book (suid, sbid, sname, 
+      sprice, snumber, spic
+      )
+    values (#{suid,jdbcType=VARCHAR}, #{sbid,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, 
+      #{sprice,jdbcType=INTEGER}, #{snumber,jdbcType=INTEGER}, #{spic,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.book.domain.CartBook">
+    insert into s_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="suid != null">
+        suid,
+      </if>
+      <if test="sbid != null">
+        sbid,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+      <if test="sprice != null">
+        sprice,
+      </if>
+      <if test="snumber != null">
+        snumber,
+      </if>
+      <if test="spic != null">
+        spic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="suid != null">
+        #{suid,jdbcType=VARCHAR},
+      </if>
+      <if test="sbid != null">
+        #{sbid,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sprice != null">
+        #{sprice,jdbcType=INTEGER},
+      </if>
+      <if test="snumber != null">
+        #{snumber,jdbcType=INTEGER},
+      </if>
+      <if test="spic != null">
+        #{spic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.book.domain.CartBookExample" resultType="java.lang.Long">
+    select count(*) from s_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update s_book
+    <set>
+      <if test="record.suid != null">
+        suid = #{record.suid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sbid != null">
+        sbid = #{record.sbid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sname != null">
+        sname = #{record.sname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sprice != null">
+        sprice = #{record.sprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.snumber != null">
+        snumber = #{record.snumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.spic != null">
+        spic = #{record.spic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update s_book
+    set suid = #{record.suid,jdbcType=VARCHAR},
+      sbid = #{record.sbid,jdbcType=VARCHAR},
+      sname = #{record.sname,jdbcType=VARCHAR},
+      sprice = #{record.sprice,jdbcType=INTEGER},
+      snumber = #{record.snumber,jdbcType=INTEGER},
+      spic = #{record.spic,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <!-- mybatis -->
+  
+  <select id="getAll" resultType="com.book.domain.CartBook" >
+  		select * from s_book where suid = #{id}
+  </select>
+  
+  <select id="getAll1" resultType="com.book.domain.CartBook">
+  		select * from s_book 
+  </select>
+  
+  <delete id="del">
+  	delete from s_book where sbid=#{arg0} and suid=#{arg1}
+  </delete>
+  
+  <select id="totalPrice" resultType="object">
+  	SELECT SUM(sprice * snumber) FROM s_book where suid = #{uid}
+  </select>
+  
+  <select id="totalAmount" resultType="object">
+  	SELECT COUNT(1) FROM s_book where suid = #{uid}
+  </select>
+  
+  <update id="upd">
+  	UPDATE s_book SET snumber = #{arg0} WHERE sbid = #{arg1} and suid = #{arg2}
+  </update>
+  
+  <insert id="add">
+  	INSERT INTO s_book ( sbid, sname ,sprice,spic,suid,snumber )  ( SELECT bid,bname,bprice,bpic,#{arg0},#{arg2} FROM b_book where bid =#{arg1})
+  </insert>
+  
+ 	<select id="sel" resultType="com.book.domain.CartBook">
+ 		SELECT sbid,suid FROM s_book
+ 	</select>
+ 	
+ 	<update id="upda">
+ 		UPDATE s_book SET snumber=snumber+#{arg2} WHERE sbid = #{arg0} AND suid = #{arg1}
+ 	</update>
+ 	
+ 	<insert id="select">
+ 		insert into o_book (ouid,obid,oname,oprice,onumber,ostatus,opic,ocategory) (select suid,sbid,sname,sprice,snumber,1,spic,#{arg2} from s_book where suid = #{arg1} and sbid = #{arg0} )
+ 	</insert>
+ 	
+ 	<select id="getListOrder" resultType="com.book.domain.OrderList">
+ 		select * from o_book where ouid = #{uuname} and ostatus= 1
+ 	</select>
+ 	
+ 	<select id="orderPrice" resultType="object">
+ 		SELECT SUM(oprice * onumber) FROM o_book where ouid = #{uuname} and ostatus=1
+ 	</select>
+ 	
+ 	<delete id="delete">
+ 		delete from o_book where ouid=#{uid} and ostatus = 1 
+ 	</delete>
+ 	
+ 	<select id="getOrderID" resultType="string">
+ 		SELECT orderid FROM o_book where ouid = #{uuname} and ostatus = 1
+ 	</select>
+ 	
+ 	<delete id="deleteSbook">
+ 		delete from s_book where sbid = #{arg0} and suid = #{arg1}
+ 	</delete>
+ 	
+ 	<update id="loseMoney">
+ 		update u_book set uprice = uprice - #{arg1} where uname = #{arg0}
+ 	</update>
+ 	
+ 	<update id="changeObookStatus">
+ 		update o_book set ostatus = 2 where obid = #{arg0} and ouid = #{arg1} and ostatus = 1
+ 	</update>
+ 	
+ 	<update id="changeObookStatusThree">
+ 		update o_book set ostatus = 3 where obid = #{arg0} and ouid = #{arg1}
+ 	</update>
+ 	
+ 	<select id="getOrderAll" resultType="com.book.domain.OrderList">
+ 		SELECT * FROM o_book where ouid = #{uuname}
+ 	</select>
+ 	
+ 	<select id="getOrderAll1" resultType="com.book.domain.AllOrderList">
+ 		select sum(oprice*onumber) allPrice,ouid,orderid  from o_book where ostatus = 2 GROUP by orderid 
+ 	</select>
+ 	
+ 	<select id="getPayOut" resultType="object">
+ 		select sum(oprice) from o_book where ouid = #{uuname} and ostatus = 2
+ 	</select>
+ 	
+ 	<update id="setOrderID">
+ 		update o_book set orderid = #{arg0} where ouid = #{arg1} and ostatus = 1
+ 	</update>
+ 	
+ 	<select id="selectCategoryById" resultType="string">
+ 		select category from c_book where cid = (select bcategory from b_book where bid = #{category})
+ 	</select>
+ 	
+ 	<select id="getCategory" resultType="string">
+ 		select distinct ocategory from o_book where ostatus=2 
+ 	</select>
+ 	
+ 	<select id="getNumberByCategory" resultType="integer">
+ 		select sum(onumber) from o_book where ostatus=2 and ocategory = #{category}
+ 	</select>
+ 	
+ 	<select id="getOrderAll2" resultType="com.book.domain.OrderList">
+ 		SELECT * FROM o_book where orderid = #{orderid} and ostatus = 2
+ 	</select>
+ 	
+ 	<delete id="deleteById" parameterType="string">
+ 		delete from c_book where cid = #{cid}
+ 	</delete>
+ 	
+</mapper>

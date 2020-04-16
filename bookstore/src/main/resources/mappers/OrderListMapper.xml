@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.OrderListMapper">
+  <resultMap id="BaseResultMap" type="com.book.domain.OrderList">
+    <result column="ouid" jdbcType="VARCHAR" property="ouid" />
+    <result column="obid" jdbcType="VARCHAR" property="obid" />
+    <result column="oname" jdbcType="VARCHAR" property="oname" />
+    <result column="oprice" jdbcType="INTEGER" property="oprice" />
+    <result column="onumber" jdbcType="INTEGER" property="onumber" />
+    <result column="ostatus" jdbcType="VARCHAR" property="ostatus" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="opic" jdbcType="VARCHAR" property="opic" />
+    <result column="oaddress" jdbcType="VARCHAR" property="oaddress" />
+    <result column="ocategory" jdbcType="VARCHAR" property="ocategory" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ouid, obid, oname, oprice, onumber, ostatus, orderid, opic, oaddress, ocategory
+  </sql>
+  <select id="selectByExample" parameterType="com.book.domain.OrderListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from o_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.book.domain.OrderListExample">
+    delete from o_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.book.domain.OrderList">
+    insert into o_book (ouid, obid, oname, 
+      oprice, onumber, ostatus, 
+      orderid, opic, oaddress, 
+      ocategory)
+    values (#{ouid,jdbcType=VARCHAR}, #{obid,jdbcType=VARCHAR}, #{oname,jdbcType=VARCHAR}, 
+      #{oprice,jdbcType=INTEGER}, #{onumber,jdbcType=INTEGER}, #{ostatus,jdbcType=VARCHAR}, 
+      #{orderid,jdbcType=VARCHAR}, #{opic,jdbcType=VARCHAR}, #{oaddress,jdbcType=VARCHAR}, 
+      #{ocategory,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.book.domain.OrderList">
+    insert into o_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ouid != null">
+        ouid,
+      </if>
+      <if test="obid != null">
+        obid,
+      </if>
+      <if test="oname != null">
+        oname,
+      </if>
+      <if test="oprice != null">
+        oprice,
+      </if>
+      <if test="onumber != null">
+        onumber,
+      </if>
+      <if test="ostatus != null">
+        ostatus,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="opic != null">
+        opic,
+      </if>
+      <if test="oaddress != null">
+        oaddress,
+      </if>
+      <if test="ocategory != null">
+        ocategory,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ouid != null">
+        #{ouid,jdbcType=VARCHAR},
+      </if>
+      <if test="obid != null">
+        #{obid,jdbcType=VARCHAR},
+      </if>
+      <if test="oname != null">
+        #{oname,jdbcType=VARCHAR},
+      </if>
+      <if test="oprice != null">
+        #{oprice,jdbcType=INTEGER},
+      </if>
+      <if test="onumber != null">
+        #{onumber,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null">
+        #{ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="opic != null">
+        #{opic,jdbcType=VARCHAR},
+      </if>
+      <if test="oaddress != null">
+        #{oaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ocategory != null">
+        #{ocategory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.book.domain.OrderListExample" resultType="java.lang.Long">
+    select count(*) from o_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update o_book
+    <set>
+      <if test="record.ouid != null">
+        ouid = #{record.ouid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obid != null">
+        obid = #{record.obid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oname != null">
+        oname = #{record.oname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oprice != null">
+        oprice = #{record.oprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.onumber != null">
+        onumber = #{record.onumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.ostatus != null">
+        ostatus = #{record.ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderid != null">
+        orderid = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opic != null">
+        opic = #{record.opic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oaddress != null">
+        oaddress = #{record.oaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ocategory != null">
+        ocategory = #{record.ocategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update o_book
+    set ouid = #{record.ouid,jdbcType=VARCHAR},
+      obid = #{record.obid,jdbcType=VARCHAR},
+      oname = #{record.oname,jdbcType=VARCHAR},
+      oprice = #{record.oprice,jdbcType=INTEGER},
+      onumber = #{record.onumber,jdbcType=INTEGER},
+      ostatus = #{record.ostatus,jdbcType=VARCHAR},
+      orderid = #{record.orderid,jdbcType=VARCHAR},
+      opic = #{record.opic,jdbcType=VARCHAR},
+      oaddress = #{record.oaddress,jdbcType=VARCHAR},
+      ocategory = #{record.ocategory,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

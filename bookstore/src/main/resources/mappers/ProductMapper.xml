@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.book.domain.Product">
+    <id column="bid" jdbcType="VARCHAR" property="bid" />
+    <result column="bcategory" jdbcType="VARCHAR" property="bcategory" />
+    <result column="bname" jdbcType="VARCHAR" property="bname" />
+    <result column="bauthor" jdbcType="VARCHAR" property="bauthor" />
+    <result column="bpublish" jdbcType="VARCHAR" property="bpublish" />
+    <result column="bprice" jdbcType="INTEGER" property="bprice" />
+    <result column="bnumber" jdbcType="INTEGER" property="bnumber" />
+    <result column="bpic" jdbcType="VARCHAR" property="bpic" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    bid, bcategory, bname, bauthor, bpublish, bprice, bnumber, bpic
+  </sql>
+  <select id="selectByExample" parameterType="com.book.domain.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from b_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from b_book
+    where bid = #{bid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from b_book
+    where bid = #{bid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.book.domain.ProductExample">
+    delete from b_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.book.domain.Product">
+    insert into b_book (bid, bcategory, bname, 
+      bauthor, bpublish, bprice, 
+      bnumber, bpic)
+    values (#{bid,jdbcType=VARCHAR}, #{bcategory,jdbcType=VARCHAR}, #{bname,jdbcType=VARCHAR}, 
+      #{bauthor,jdbcType=VARCHAR}, #{bpublish,jdbcType=VARCHAR}, #{bprice,jdbcType=INTEGER}, 
+      #{bnumber,jdbcType=INTEGER}, #{bpic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.book.domain.Product">
+    insert into b_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        bid,
+      </if>
+      <if test="bcategory != null">
+        bcategory,
+      </if>
+      <if test="bname != null">
+        bname,
+      </if>
+      <if test="bauthor != null">
+        bauthor,
+      </if>
+      <if test="bpublish != null">
+        bpublish,
+      </if>
+      <if test="bprice != null">
+        bprice,
+      </if>
+      <if test="bnumber != null">
+        bnumber,
+      </if>
+      <if test="bpic != null">
+        bpic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        #{bid,jdbcType=VARCHAR},
+      </if>
+      <if test="bcategory != null">
+        #{bcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="bname != null">
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bauthor != null">
+        #{bauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bpublish != null">
+        #{bpublish,jdbcType=VARCHAR},
+      </if>
+      <if test="bprice != null">
+        #{bprice,jdbcType=INTEGER},
+      </if>
+      <if test="bnumber != null">
+        #{bnumber,jdbcType=INTEGER},
+      </if>
+      <if test="bpic != null">
+        #{bpic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.book.domain.ProductExample" resultType="java.lang.Long">
+    select count(*) from b_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update b_book
+    <set>
+      <if test="record.bid != null">
+        bid = #{record.bid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bcategory != null">
+        bcategory = #{record.bcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bname != null">
+        bname = #{record.bname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bauthor != null">
+        bauthor = #{record.bauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bpublish != null">
+        bpublish = #{record.bpublish,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bprice != null">
+        bprice = #{record.bprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.bnumber != null">
+        bnumber = #{record.bnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.bpic != null">
+        bpic = #{record.bpic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update b_book
+    set bid = #{record.bid,jdbcType=VARCHAR},
+      bcategory = #{record.bcategory,jdbcType=VARCHAR},
+      bname = #{record.bname,jdbcType=VARCHAR},
+      bauthor = #{record.bauthor,jdbcType=VARCHAR},
+      bpublish = #{record.bpublish,jdbcType=VARCHAR},
+      bprice = #{record.bprice,jdbcType=INTEGER},
+      bnumber = #{record.bnumber,jdbcType=INTEGER},
+      bpic = #{record.bpic,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.book.domain.Product">
+    update b_book
+    <set>
+      <if test="bcategory != null">
+        bcategory = #{bcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="bname != null">
+        bname = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bauthor != null">
+        bauthor = #{bauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bpublish != null">
+        bpublish = #{bpublish,jdbcType=VARCHAR},
+      </if>
+      <if test="bprice != null">
+        bprice = #{bprice,jdbcType=INTEGER},
+      </if>
+      <if test="bnumber != null">
+        bnumber = #{bnumber,jdbcType=INTEGER},
+      </if>
+      <if test="bpic != null">
+        bpic = #{bpic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.book.domain.Product">
+    update b_book
+    set bcategory = #{bcategory,jdbcType=VARCHAR},
+      bname = #{bname,jdbcType=VARCHAR},
+      bauthor = #{bauthor,jdbcType=VARCHAR},
+      bpublish = #{bpublish,jdbcType=VARCHAR},
+      bprice = #{bprice,jdbcType=INTEGER},
+      bnumber = #{bnumber,jdbcType=INTEGER},
+      bpic = #{bpic,jdbcType=VARCHAR}
+    where bid = #{bid,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- mybatis -->
+  <select id="getProductMap" resultType="map" parameterType="hashmap">
+  		select * from b_book
+  	<where>
+  		<if test="bname!=null">
+  			bname like #{bname}
+  		</if>
+  		<if test="bcategory!=null">
+  			and bcategory =  #{bcategory}
+  		</if> 	 	 	 
+  		<if test="from!=null">
+  			and bprice  &gt;= #{from}
+  		</if>
+  		<if test="to!=null">
+  			and bprice  &lt;= #{to}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="getAll" resultMap="BaseResultMap">
+  	select bid ,bname ,bauthor ,bpublish ,bprice ,bnumber ,bcategory from b_book
+  </select>
+  
+  <delete id="delete">
+  	delete from b_book where bid=#{id}
+  </delete>
+  
+  <insert id="save" parameterType="com.book.domain.Product">
+  	insert into b_book (bid,bname,bauthor,bpublish,bprice,bnumber,bcategory,bpic) values(#{bid},#{bname},#{bauthor},#{bpublish},#{bprice},#{bnumber},#{bcategory},#{bpic})
+  </insert>
+  
+  <select id="getById" resultMap="BaseResultMap">
+ 	 select * from b_book where bid=#{id}
+  </select>
+  
+  <update id="update" parameterType="com.book.domain.Product">
+  	update b_book set bname=#{bname},bauthor=#{bauthor},bpublish=#{bpublish},bprice=#{bprice},bnumber=#{bnumber},bcategory=#{bcategory},bpic=#{bpic} where bid=#{bid}
+  </update>
+  
+  <!-- 分页:getPage/getTotalCount/getBrandPage/getTotalCount -->
+  
+  <select id="getProductBrand" resultType="map">
+  	select bid,bname,bauthor,bpublish,bprice,bnumber,bcategory,bpic from b_book
+  </select>
+  
+  <select id="getProductNumber" resultType="int">
+  	select count(1) from b_book
+  </select>
+  
+  <select id="getProductAll" resultType="map">
+  	select *  from b_book
+  </select>
+  
+  <update id="updateCategory">
+  	update c_book set category=#{arg1} where cid = #{arg0}
+  </update>
+</mapper>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.EnshrineBookMapper">
+  <resultMap id="BaseResultMap" type="com.book.domain.EnshrineBook">
+    <id column="eid" jdbcType="VARCHAR" property="eid" />
+    <result column="euname" jdbcType="VARCHAR" property="euname" />
+    <result column="ebid" jdbcType="VARCHAR" property="ebid" />
+    <result column="eprice" jdbcType="INTEGER" property="eprice" />
+    <result column="epic" jdbcType="VARCHAR" property="epic" />
+    <result column="ebname" jdbcType="VARCHAR" property="ebname" />
+    <result column="ecategory" jdbcType="VARCHAR" property="ecategory" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    eid, euname, ebid, eprice, epic, ebname, ecategory
+  </sql>
+  <select id="selectByExample" parameterType="com.book.domain.EnshrineBookExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from e_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from e_book
+    where eid = #{eid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from e_book
+    where eid = #{eid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.book.domain.EnshrineBookExample">
+    delete from e_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.book.domain.EnshrineBook">
+    insert into e_book (eid, euname, ebid, 
+      eprice, epic, ebname, 
+      ecategory)
+    values (#{eid,jdbcType=VARCHAR}, #{euname,jdbcType=VARCHAR}, #{ebid,jdbcType=VARCHAR}, 
+      #{eprice,jdbcType=INTEGER}, #{epic,jdbcType=VARCHAR}, #{ebname,jdbcType=VARCHAR}, 
+      #{ecategory,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.book.domain.EnshrineBook">
+    insert into e_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="euname != null">
+        euname,
+      </if>
+      <if test="ebid != null">
+        ebid,
+      </if>
+      <if test="eprice != null">
+        eprice,
+      </if>
+      <if test="epic != null">
+        epic,
+      </if>
+      <if test="ebname != null">
+        ebname,
+      </if>
+      <if test="ecategory != null">
+        ecategory,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        #{eid,jdbcType=VARCHAR},
+      </if>
+      <if test="euname != null">
+        #{euname,jdbcType=VARCHAR},
+      </if>
+      <if test="ebid != null">
+        #{ebid,jdbcType=VARCHAR},
+      </if>
+      <if test="eprice != null">
+        #{eprice,jdbcType=INTEGER},
+      </if>
+      <if test="epic != null">
+        #{epic,jdbcType=VARCHAR},
+      </if>
+      <if test="ebname != null">
+        #{ebname,jdbcType=VARCHAR},
+      </if>
+      <if test="ecategory != null">
+        #{ecategory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.book.domain.EnshrineBookExample" resultType="java.lang.Long">
+    select count(*) from e_book
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update e_book
+    <set>
+      <if test="record.eid != null">
+        eid = #{record.eid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.euname != null">
+        euname = #{record.euname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ebid != null">
+        ebid = #{record.ebid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eprice != null">
+        eprice = #{record.eprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.epic != null">
+        epic = #{record.epic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ebname != null">
+        ebname = #{record.ebname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ecategory != null">
+        ecategory = #{record.ecategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update e_book
+    set eid = #{record.eid,jdbcType=VARCHAR},
+      euname = #{record.euname,jdbcType=VARCHAR},
+      ebid = #{record.ebid,jdbcType=VARCHAR},
+      eprice = #{record.eprice,jdbcType=INTEGER},
+      epic = #{record.epic,jdbcType=VARCHAR},
+      ebname = #{record.ebname,jdbcType=VARCHAR},
+      ecategory = #{record.ecategory,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.book.domain.EnshrineBook">
+    update e_book
+    <set>
+      <if test="euname != null">
+        euname = #{euname,jdbcType=VARCHAR},
+      </if>
+      <if test="ebid != null">
+        ebid = #{ebid,jdbcType=VARCHAR},
+      </if>
+      <if test="eprice != null">
+        eprice = #{eprice,jdbcType=INTEGER},
+      </if>
+      <if test="epic != null">
+        epic = #{epic,jdbcType=VARCHAR},
+      </if>
+      <if test="ebname != null">
+        ebname = #{ebname,jdbcType=VARCHAR},
+      </if>
+      <if test="ecategory != null">
+        ecategory = #{ecategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where eid = #{eid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.book.domain.EnshrineBook">
+    update e_book
+    set euname = #{euname,jdbcType=VARCHAR},
+      ebid = #{ebid,jdbcType=VARCHAR},
+      eprice = #{eprice,jdbcType=INTEGER},
+      epic = #{epic,jdbcType=VARCHAR},
+      ebname = #{ebname,jdbcType=VARCHAR},
+      ecategory = #{ecategory,jdbcType=VARCHAR}
+    where eid = #{eid,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- mybatis -->
+  <select id="getList" resultType="com.book.domain.EnshrineBook">
+  	select * from e_book where euname = #{uid}
+  </select>
+  
+  <insert id="add">
+  	INSERT into e_book (ebid,eprice,epic,ebname,ecategory,euname,eid) SELECT bid,bprice,bpic,bname,bcategory,#{arg0},#{arg1} FROM b_book WHERE bid=#{arg2}
+  </insert>
+  
+  <delete id="del">
+  	 delete from e_book where ebid=#{arg0} and euname=#{arg1} 
+  </delete>
+  
+  <select id="totalAmount" resultType="object">
+  	SELECT COUNT(1) FROM e_book where euname = #{uid}
+  </select>
+  
+  <select id="sel" resultType="com.book.domain.EnshrineBook">
+  	select * from e_book
+  </select>
+</mapper>
