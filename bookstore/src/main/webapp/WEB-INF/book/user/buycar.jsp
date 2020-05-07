@@ -56,6 +56,9 @@
 			}, function(data) {
 				if (data.result) {
 					window.location.replace(window.location.href);
+				}else{
+					alert("没有那么多库存，请重新选择购买数量");
+					window.location.replace(window.location.href);
 				}
 			}, "json")
 		})
@@ -93,7 +96,7 @@
 
 
 
-<title>尤洪</title>
+<title>博库智慧城</title>
 </head>
 <body>
 	<!--Begin Header Begin-->
@@ -122,7 +125,7 @@
 							<div class="s_city_t"></div>
 							<div class="ss_list_c">
 								<ul>
-									<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+									<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
 								</ul>
 							</div>
 						</div>
@@ -299,7 +302,6 @@
 					<td class="car_th" width="490">商品名称</td>
 					<td class="car_th" width="130">商品单价</td>
 					<td class="car_th" width="150">购买数量</td>
-					<td class="car_th" width="150">小计</td>
 					<td class="car_th" width="150">操作</td>
 				</tr>
 				<c:forEach items="${cList }" var="cartbook" varStatus="vs">
@@ -331,64 +333,25 @@
 									class="car_btn_2" name="numberincr" id="numberincr"  d="${cartbook.sbid }"/>
 							</div>
 						</td>
-						<td align="center" style="color: #ff4e00;">${cartbook.sprice * cartbook.snumber}</td>
 						<td align="center"><a
 							href="${pageContext.request.contextPath}/del?sbid=${cartbook.sbid }&suid=${cartbook.suid }"
 							class="b_sure">删除</a>&nbsp; &nbsp;
 					</tr>
 				</c:forEach>
 				
-				<tr height="70">
-					<td colspan="6"
-						style="font-family: 'Microsoft YaHei'; border-bottom: 0;"><span
-						class="fr">商品总价：<b style="font-size: 22px; color: #ff4e00;">￥${tPrice }</b></span>
-					</td>
-				</tr>
+				
 				<tr valign="top" height="150">
 					<td colspan="6" align="right">
 					<a href="${pageContext.request.contextPath}/brandlist">
 						<img src="images/buy1.gif" /></a>&nbsp; &nbsp; 
 						<!-- 继续购物 --> 
-						<img src="images/buy2.gif"  id="payment"/></a> <!-- 结账 --></td>
+						<img src="images/buy2.gif" title="勾选按钮后方可确认订单"  id="payment"/></a> <!-- 结账 --></td>
 				</tr>
 
 			</table>
 			</c:if>
 		</div>
 		<!--End 第一步：查看购物车 End-->
-
-		<!--Begin 弹出层-删除商品 Begin-->
-
-		<div id="fade" class="black_overlay"></div>
-		<div id="MyDiv" class="white_content">
-			<div class="white_d">
-				<div class="notice_t">
-					<span class="fr" style="margin-top: 10px; cursor: pointer;"
-						onclick="CloseDiv('MyDiv','fade')"><img
-						src="images/close.gif" /></span>
-				</div>
-				<div class="notice_c">
-
-					<table border="0" align="center" style="font-size: 16px;"
-						cellspacing="0" cellpadding="0">
-						<tr valign="top">
-							<td>您确定要把该商品移除购物车吗？</td>
-						</tr>
-						<tr height="50" valign="bottom">
-							<!-- 传入商品id--sbid 及用户id--suid -->
-							<td><a
-								href="${pageContext.request.contextPath}/del?sbid=${cartbook.sbid }&ubid=12"
-								class="b_sure">确定</a><a href="#" class="b_buy">取消</a></td>
-						</tr>
-					</table>
-
-				</div>
-			</div>
-		</div>
-
-
-		<!--End 弹出层-删除商品 End-->
-
 
 		<!--Begin Footer Begin -->
 		<div class="b_btm_bg bg_color">

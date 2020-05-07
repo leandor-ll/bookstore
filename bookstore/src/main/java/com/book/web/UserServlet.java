@@ -9,41 +9,29 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.book.domain.AllOrderList;
 import com.book.domain.CartBook;
 import com.book.domain.Category;
+import com.book.domain.ChargeMoney;
 import com.book.domain.EnshrineBook;
 import com.book.domain.OrderList;
 import com.book.domain.Product;
@@ -238,19 +227,13 @@ public class UserServlet {
 		// 进入service层进行修改
 		userService.updataPassword(uname, uIDcard, upassword);
 
-		// 进入service层进行查看，看密码是否改了
-		List<String> result = userService.selectPassword(uname);
-		if (result.size() == 0 || result == null) {
-			return "updataPassword";
-		}
-		// 对结果进行判断
-		if (result.get(2).equals(upassword)) {
-			// 修改成功，返回到登录界面
-			return "login";
-		} else {
-			// 修改失败
-			return "updataPassword";
-		}
+//		// 进入service层进行查看，看密码是否改了
+//		List<String> result = userService.selectPassword(uname);
+//		if (result.size() == 0 || result == null) {
+//			return "updataPassword";
+//		}
+
+		return "login";
 	}
 
 	// 主页面（index.jsp页面）的展示
@@ -282,7 +265,7 @@ public class UserServlet {
 		// 根据复选框中得到的书ID，将信息插入订单表中
 		for (String s : split) {
 			cartBookService.select(s, uuname, cartBookService.selectCategoryById(s));
-		}	
+		}
 		ModelAndView mav = new ModelAndView("buycar_two");
 
 		int orderPrice = Integer.parseInt(cartBookService.orderPrice(uuname).toString());
@@ -290,10 +273,9 @@ public class UserServlet {
 
 		List<OrderList> cList = cartBookService.getListOrder(uuname);
 		session.setAttribute("cbcbList", cList);
-		
+
 		return mav;
 	}
-		
 
 	// 查询分类（brandlist.jsp页面） 条件查询（类别、书名、作者）的展示
 	@RequestMapping("/brandlist")
@@ -471,41 +453,52 @@ public class UserServlet {
 	// ajax---修改加减数量
 	@ResponseBody
 	@RequestMapping("/upd")
-	protected Map<String, Object> upd(@RequestParam("sbid") String id, @RequestParam("number") String sNu,
+	protected Map<String, Object> upd(@RequestParam("sbid") String sbid, @RequestParam("number") String sNu,
 			@RequestParam("suid") String uid) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		cartBookService.upd(sNu, id, uid);
-		result.put("result", true);
+		Product oneList = productService.getById(sbid);
+		Integer bnumber = oneList.getBnumber();
+		if (Integer.parseInt(sNu) > bnumber) {
+			result.put("result", false);
+		} else {
+			cartBookService.upd(sNu, sbid, uid);
+			result.put("result", true);
+		}
 		return result;
 	}
 
 	// 点击【确定订单】后跳转到订单成功
 	@RequestMapping("/show1")
-	protected ModelAndView show1(HttpSession session) {
-
+	protected ModelAndView show1(String ousername,String ouserphone,String oaddress,HttpSession session) {
+		
 		ModelAndView mav = new ModelAndView("buycar_three");
 		String uuname = (String) session.getAttribute("uuname");
 		if (uuname == null || uuname.trim().length() == 0) {
 			return new ModelAndView("error");
 		}
+		
+		
 		int orderPrice = Integer.parseInt(cartBookService.orderPrice(uuname).toString());
 		int userPrice = Integer.parseInt(userService.userPrice(uuname).toString());
 
+		
 		mav.addObject("userPrice", userPrice);
 		mav.addObject("oPrice", orderPrice);
 
-		// 设置成功购买【确认订单】后的订单号
+		// 设置点击购买【确认订单】后的订单号
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String format = sdf.format(new Date());
-		cartBookService.setOrderID(format, uuname);
+		cartBookService.setOrderID(format, uuname, ousername, ouserphone, oaddress);
 
 		if (userPrice >= orderPrice) {
 
-			// 订单成功支付 去购物车删除信息，但是订单表不删除
+			// 订单成功支付, 去购物车删除信息，但是订单表不删除
 			// 获得传过来的书ID值，去购物车删除该信息
 			String vId = (String) session.getAttribute("vv");
 			String[] split = vId.split(",");
 			for (String sid : split) {
+				int number = cartBookService.queryNumber(sid, uuname);
+				productService.subtrace(sid, number);
 				cartBookService.deleteSbook(sid, uuname);
 				cartBookService.changeObookStatus(sid, uuname);
 			}
@@ -513,11 +506,15 @@ public class UserServlet {
 			// 将上述中设置的订单单号拿下来直接使用--
 			// 不需要再去通过cartBookService.getOrderID(uuname)查找订单单号
 			mav.addObject("orderID", format);
-
 			// 用户账户与订单金额相减
 			cartBookService.loseMoney(uuname, orderPrice);
+
+			mav.addObject("ousername", ousername);
+			mav.addObject("ouserphone", ouserphone);
+			mav.addObject("oaddress", oaddress);
 			mav.addObject("liupeng", true);
 			return mav;
+			
 		} else {
 			String vId = (String) session.getAttribute("vv");
 			String[] split = vId.split(",");
@@ -529,47 +526,21 @@ public class UserServlet {
 		}
 	}
 
-	// 点击【点我充值】----进入（chargemoney.jsp）页面
-	@RequestMapping("/chargeMoney")
+	// 点击【点我充值】----进入（charg-emoney.jsp）页面
+	@RequestMapping("/charge-money")
 	protected ModelAndView chargeMoney(HttpSession session) {
-		ModelAndView mav = new ModelAndView("chargemoney");
+		ModelAndView mav = new ModelAndView("charge-money");
 
 		String uuname = (String) session.getAttribute("uuname");
 		if (uuname == null || uuname.trim().length() == 0) {
 			return new ModelAndView("error");
 		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String format = sdf.format(new Date());
+		userService.setChargeMoneyList(uuname, format);
+		userService.updateaddprice("50", uuname);
 		session.setAttribute("uuname", uuname);
-		List<CartBook> cList = cartBookService.getList(uuname);
-		if (cList.size() == 0 || cList == null) {
-			mav.addObject("checkBuyCar", false);
-			session.setAttribute("cList", null);
-			mav.addObject("tPrice", 0);
-			mav.addObject("tAmount", 0);
-			int userPrice = Integer.parseInt(userService.userPrice(uuname).toString());
-			mav.addObject("userPrice", userPrice);
-		} else {
-			mav.addObject("checkBuyCar", true);
-			session.setAttribute("cList", cList);
-			int tPrice = Integer.parseInt(cartBookService.totalPrice(uuname).toString());
-			session.setAttribute("tPrice", tPrice);
-			int allAmount = Integer.parseInt(cartBookService.totalAmount(uuname).toString());
-			mav.addObject("tAmount", allAmount);
-			int userPrice = Integer.parseInt(userService.userPrice(uuname).toString());
-			mav.addObject("userPrice", userPrice);
-		}
 		return mav;
-	}
-
-	// 充值操作
-	@ResponseBody
-	@RequestMapping("/mmc")
-	protected Map<String, Object> mmc(String text, String uuname) {
-		// 充值方法
-		userService.updateaddprice(text, uuname);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("result", true);
-		// 充值完成
-		return map;
 	}
 
 	// 进入用户个人信息界面
@@ -637,7 +608,6 @@ public class UserServlet {
 			return new ModelAndView("error");
 		}
 		//
-		List<CartBook> cList = cartBookService.getList(uuname);
 		int uunameDentity = Integer.parseInt(userService.checkDentity(uuname).toString());
 		// 对登录用户进行判断
 		if (uunameDentity == 1) {
@@ -645,6 +615,7 @@ public class UserServlet {
 		} else {
 			session.setAttribute("uunameDentity", true);
 		}
+		List<CartBook> cList = cartBookService.getList(uuname);
 		if (cList.size() == 0 || cList == null) {
 			mav.addObject("checkBuyCar", false);
 			mav.addObject("cList", null);
@@ -663,7 +634,7 @@ public class UserServlet {
 			mav.addObject("userPrice", userPrice);
 		}
 
-		List<OrderList> orderList = cartBookService.getOrderAll(uuname);
+		List<OrderList> orderList = cartBookService.getOrderAllMyself(uuname);
 		if (orderList == null || orderList.size() == 0) {
 			mav.addObject("orderList", null);
 		} else {
@@ -691,7 +662,7 @@ public class UserServlet {
 		}
 
 		List<AllOrderList> orderList = cartBookService.getOrderAll1();
-		
+
 		mav.addObject("orderList", orderList);
 
 		return mav;
@@ -813,14 +784,14 @@ public class UserServlet {
 
 	// 修改页面的保存
 	@RequestMapping(value = "/emp", method = RequestMethod.PUT)
-	protected String editSave(Product p,MultipartFile file) throws FileNotFoundException, IOException{
-			// 获取完整的文件名
-			String originalFilename = file.getOriginalFilename();
-			if(originalFilename==null||originalFilename.trim().length()==0) {
-				// 修改时，为了防止数据丢失，需要先从数据库中加载这个对象出来
-				Product byId = productService.getById(p.getBid());
-				p.setBpic(byId.getBpic());
-			}else {
+	protected String editSave(Product p, MultipartFile file) throws FileNotFoundException, IOException {
+		// 获取完整的文件名
+		String originalFilename = file.getOriginalFilename();
+		if (originalFilename == null || originalFilename.trim().length() == 0) {
+			// 修改时，为了防止数据丢失，需要先从数据库中加载这个对象出来
+			Product byId = productService.getById(p.getBid());
+			p.setBpic(byId.getBpic());
+		} else {
 			// 获取扩展名
 			String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
 			// 生成随机的文件名
@@ -848,7 +819,7 @@ public class UserServlet {
 			// 将文件地址存入数据库中
 			p.setBpic(saveValue);
 		}
-		
+
 		productService.update(p);
 		return "redirect:/emps";
 	}
@@ -872,16 +843,20 @@ public class UserServlet {
 	@RequestMapping("/product")
 	protected ModelAndView product(String bid, HttpSession session, HttpServletResponse response,
 			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("product");
 
 		String uuname = (String) session.getAttribute("uuname");
 		Product Onelist = productService.getById(bid);
-		ModelAndView mav = new ModelAndView("product");
+		mav.addObject("Onelist", Onelist);
 
 		Map<String, Map<String, Object>> cmap = categoryService.getCategoryMap();
 		mav.addObject("cmap", cmap);
 
 		List<Map<String, Object>> cMapList = categoryService.getCategoryMapList();
 		mav.addObject("cMapList", cMapList);
+
+		List<Map<String, Object>> map = productService.getProductAll();
+		mav.addObject("map", map);
 
 		// 是否登录成功
 		if (uuname == null || uuname.trim().length() == 0) {// 无人登录
@@ -944,7 +919,6 @@ public class UserServlet {
 			response.addCookie(cookie);
 
 		}
-		mav.addObject("Onelist", Onelist);
 
 		return mav;
 	}
@@ -958,9 +932,9 @@ public class UserServlet {
 	}
 
 	// 我的收藏页面显示
-	@RequestMapping("/Member_Collect")
-	protected ModelAndView member_Collect(HttpSession session) {
-		ModelAndView mav = new ModelAndView("member_Collect");
+	@RequestMapping("/member-collect")
+	protected ModelAndView member_collect(HttpSession session) {
+		ModelAndView mav = new ModelAndView("member-collect");
 		String uuname = (String) session.getAttribute("uuname");
 		if (uuname == null || uuname.trim().length() == 0) {
 			return new ModelAndView("error");
@@ -1034,32 +1008,45 @@ public class UserServlet {
 	@RequestMapping("/delCollect")
 	protected String delCollect(String sbid, String suid) {
 		enshrineBookService.del(sbid, suid);
-		return "redirect:/Member_Collect";
+		return "redirect:/member-collect";
 	}
-
-	// 资金管理页面【member_Money.jsp】
-	@RequestMapping("/member_money")
-	protected ModelAndView member_Money(String id, HttpSession session) {
+	
+	//删除个人订单列表的信息。
+	@RequestMapping("/deleteMyselfOrderlist")
+	protected String deleteMyselfOrderlist(String ouid, String orderid) {
+		cartBookService.deleteMyselfOrderlist(ouid, orderid);
+		return "redirect:/show2";
+	}
+	
+	// 资金管理页面【member-money.jsp】
+	@RequestMapping("/member-money")
+	protected ModelAndView member_money(String id, HttpSession session) {
 		String uuname = (String) session.getAttribute("uuname");
-		ModelAndView mav = new ModelAndView("member_Money");
+		ModelAndView mav = new ModelAndView("member-money");
+
 		if (uuname == null || uuname.trim().length() == 0) {
-			return new ModelAndView("error");
-		}
-		Map<String, Map<String, Object>> cmap = categoryService.getCategoryMap();
-		mav.addObject("cmap", cmap);
 
-		List<Map<String, Object>> cMapList = categoryService.getCategoryMapList();
-		mav.addObject("cMapList", cMapList);
-
-		// 是否登录成功
-		if (uuname == null || uuname.trim().length() == 0) {// 无人登录
 			session.setAttribute("uuname", null); // 将当前登录的用户名传输过去+
+			return new ModelAndView("error");
+
 		} else {
+
 			// 登录成功
 			session.setAttribute("uuname", uuname); // 将当前登录的用户名传输过去
 			List<CartBook> cList = cartBookService.getList(uuname);
 
+			Map<String, Map<String, Object>> cmap = categoryService.getCategoryMap();
+			mav.addObject("cmap", cmap);
+
+			List<Map<String, Object>> cMapList = categoryService.getCategoryMapList();
+			mav.addObject("cMapList", cMapList);
+
+			int userPrice = Integer.parseInt(userService.userPrice(uuname).toString());
+			mav.addObject("userPrice", userPrice);
+
 			int uunameDentity = Integer.parseInt(userService.checkDentity(uuname).toString());
+
+			// 判断用户身份
 			if (uunameDentity == 1) {
 				session.setAttribute("uunameDentity", false);
 			} else {
@@ -1083,8 +1070,28 @@ public class UserServlet {
 				int allAmount = Integer.parseInt(cartBookService.totalAmount(uuname).toString());
 				mav.addObject("tAmount", allAmount);
 			}
+
+			// 获取登录后用户充值信息
+			List<ChargeMoney> chargeMoneyList = userService.queryChargeMoneyList(uuname);
+			if (chargeMoneyList == null || chargeMoneyList.size() == 0) {
+				mav.addObject("chargeMoneyList", null);
+			} else {
+				mav.addObject("chargeMoneyList", chargeMoneyList);
+			}
 		}
 		return mav;
+	}
+
+	// 充值列表的删除
+	@ResponseBody
+	@RequestMapping("/deleteChargeMoneyList")
+	protected Map<String, Object> deleteChargeMoneyList(@RequestParam("userId") String userid,
+			@RequestParam("chargeTime") String chargetime) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		userService.deleteChargeMoneyList(userid, chargetime);
+		result.put("result", true);
+		return result;
 	}
 
 	// 销售分析页面
@@ -1135,8 +1142,6 @@ public class UserServlet {
 		return mav;
 	}
 
-
-
 	// 使用echarts，完成界面图表的显示
 	@ResponseBody
 	@RequestMapping("/echarts")
@@ -1174,14 +1179,13 @@ public class UserServlet {
 		} else {
 			userService.updateaddprice("50", uuname);
 			System.out.println("服务器异步通知页面路径下的信息：充值成功！");
-			return "member_Money";
+			return "member-money";
 		}
 	}
 
+	// 注销功能 --- 销毁当前的session
 
 	// 注销功能 --- 销毁当前的session
-	
-	//注销功能 --- 销毁当前的session
 	@RequestMapping("/logout")
 	protected String logout(HttpSession session) {
 		session.invalidate();
@@ -1190,7 +1194,7 @@ public class UserServlet {
 
 	// 全部订单详情显示
 	@RequestMapping("queryId")
-	protected ModelAndView queryId(String id,HttpSession session) {
+	protected ModelAndView queryId(String id, HttpSession session) {
 		ModelAndView mav = new ModelAndView("memberorder3");
 		String uuname = (String) session.getAttribute("uuname");
 		// 判断是否是正常登录【按逻辑执行】
@@ -1225,11 +1229,49 @@ public class UserServlet {
 		session.setAttribute("doi", detailsOrderInformation);
 		return mav;
 	}
-	
+	// 全部订单详情显示
+		@RequestMapping("/querymyselfid")
+		protected ModelAndView querymyselfid(String id, HttpSession session) {
+			ModelAndView mav = new ModelAndView("memberorder4");
+			String uuname = (String) session.getAttribute("uuname");
+			// 判断是否是正常登录【按逻辑执行】
+			if (uuname == null || uuname.trim().length() == 0) {
+				return new ModelAndView("error");
+			}
+			List<CartBook> cList = cartBookService.getList(uuname);
+			int uunameDentity = Integer.parseInt(userService.checkDentity(uuname).toString());
+			if (uunameDentity == 1) {
+				session.setAttribute("uunameDentity", false);
+			} else {
+				session.setAttribute("uunameDentity", true);
+			}
+			if (cList.size() == 0 || cList == null) {
+				mav.addObject("checkBuyCar", false);
+				mav.addObject("cList", null);
+				mav.addObject("tPrice", 0);
+				mav.addObject("tAmount", 0);
+				int userPrice = Integer.parseInt(userService.userPrice(uuname).toString());
+				mav.addObject("userPrice", userPrice);
+			} else {
+				mav.addObject("checkBuyCar", true);
+				session.setAttribute("cList", cList);
+				int tPrice = Integer.parseInt(cartBookService.totalPrice(uuname).toString());
+				session.setAttribute("tPrice", tPrice);
+				int allAmount = Integer.parseInt(cartBookService.totalAmount(uuname).toString());
+				mav.addObject("tAmount", allAmount);
+				int userPrice = Integer.parseInt(userService.userPrice(uuname).toString());
+				mav.addObject("userPrice", userPrice);
+			}
+			List<OrderList> detailsOrderInformation = cartBookService.getOrderAll2(id);
+			session.setAttribute("doi", detailsOrderInformation);
+			return mav;
+		}
+
 	@RequestMapping("/hello2")
 	protected String hello2() {
 		return "hello2";
 	}
+
 	@RequestMapping("/category")
 	protected ModelAndView category() {
 		List<Map<String, Object>> cmap = categoryService.getCategoryMaps();

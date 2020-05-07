@@ -50,7 +50,7 @@ public interface CartBookService {
 
 	Object getPayOut(String uuname);
 
-	void setOrderID(String format, String uuname);
+	void setOrderID(String format, String uuname,String ousername,String ouserphone,String oaddress);
 
 	String selectCategoryById(String s);
 
@@ -61,5 +61,12 @@ public interface CartBookService {
 	List<OrderList> getOrderAll2(String orderid);
 	
 	void deleteById(String id);
+
+	int queryNumber(String sid, String uuname);
+
+	List<OrderList> getOrderAllMyself(String uuname);
+
+	void deleteMyselfOrderlist(String ouid, String orderid);
+
 
 }

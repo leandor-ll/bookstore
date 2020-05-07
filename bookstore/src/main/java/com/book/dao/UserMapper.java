@@ -1,5 +1,6 @@
 package com.book.dao;
 
+import com.book.domain.ChargeMoney;
 import com.book.domain.User;
 import com.book.domain.UserExample;
 import java.util.List;
@@ -49,4 +50,10 @@ public interface UserMapper {
 	Object checkDentity(String uuname);
 
 	void changeDentity(String uuname);
+
+	void setChargeMoneyList(String uuname, String format);
+
+	List<ChargeMoney> queryChargeMoneyList(String uuname);
+
+	void deleteChargeMoneyList(String userid, String chargetime);
 }

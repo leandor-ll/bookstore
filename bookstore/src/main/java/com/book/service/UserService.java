@@ -1,8 +1,8 @@
 package com.book.service;
 
 import java.util.List;
-import java.util.Map;
 
+import com.book.domain.ChargeMoney;
 import com.book.domain.User;
 
 public interface UserService {
@@ -23,4 +23,10 @@ public interface UserService {
 	Object checkDentity(String uuname);
 
 	void changeDentity(String uuname);
+
+	void setChargeMoneyList(String uuname, String format);
+
+	List<ChargeMoney> queryChargeMoneyList(String uuname);
+
+	void deleteChargeMoneyList(String userid, String chargetime);
 }

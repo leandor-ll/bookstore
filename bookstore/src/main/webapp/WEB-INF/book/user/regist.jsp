@@ -92,7 +92,7 @@
 				}
 			})
 		}) 
-		$("#uIDcard").blur(function(){
+		$("#uidcard").blur(function(){
 			var uidcard = $(this).val();
 			var uregex = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 			if(uregex.test(uidcard)){
@@ -203,7 +203,7 @@
 							</td>
 							<td>
 								<span id="spanUIDCard" ></span>
-								<input type="text" value="" class="l_num" name="uIDcard" id="uIDcard" />
+								<input type="text" value="" class="l_num" name="uidcard" id="uidcard" />
 							</td>
 						</tr>
 						
@@ -220,19 +220,9 @@
 								&nbsp;</td>
 							<td>
 								<span id="spancode" ></span>
-								<input type="text" value="" class="l_ipt" id="checkedcode" name="checkedcode"/> 
+								<input type="text" value="" class="l_ipt" id="checkedcode" name="checkedcode" style="margin-bottom: 30px;"/> 
 								<img src="${pageContext.request.contextPath }/cc" title="看不清？点击更换验证码" name="code" id="code">
 								<span id="di" name="di">输入错误</span>
-							</td>
-						</tr>
-						
-						<tr>
-							<td>&nbsp;</td>
-							<td style="font-size: 12px; padding-top: 3px;" height="10px">
-								<span style="font-family: '宋体';" class="fl">
-									<label class="r_rad"><input type="checkbox" checked="checked" id="read" name="read"/></label>
-									<label class="r_txt">我已阅读并接受《用户协议》</label>
-								</span>
 							</td>
 						</tr>
 						

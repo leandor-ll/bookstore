@@ -20,7 +20,7 @@
     
     <script type="text/javascript" src="js/shade.js"></script>
     
-<title>图书购买系统</title>
+<title>博库智慧城</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -52,7 +52,7 @@
                     	<div class="s_city_t"></div>
                         <div class="ss_list_c">
                         	<ul>
-                            	<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+                            	<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
                             </ul>
                         </div>
                     </div>     
@@ -105,7 +105,7 @@
     	<ul class="menu_r">
 				<li><a href="${pageContext.request.contextPath }/index">首页</a></li>
 			</ul>
-			<div class="m_ad">欢迎进入易买网</div>
+			<div class="m_ad">欢迎来到博库智慧城！</div>
     </div>
 </div>
 <!--End Menu End--> 
@@ -127,18 +127,19 @@
               </tr>
               <tr>
                 <td style="font-size:14px; font-family:'宋体'; padding:10px 0 20px 0; border-bottom:1px solid #b6b6b6;">
-                	您选定的配送方式为: <font color="#ff4e00">申通快递</font>； &nbsp; &nbsp;您选定的支付方式为: <font color="#ff4e00">支付宝</font>； &nbsp; &nbsp;您的应付款金额为: <font color="#ff4e00">${oPrice }</font>
+                	为您选定的配送方式为: <font color="#ff4e00">申通快递</font>； &nbsp; &nbsp;您的支付方式为: <font color="#ff4e00">账户余额</font>； &nbsp; &nbsp;您的消费金额为: <font color="#ff4e00">${oPrice }</font>
                 </td>
               </tr>
               <tr>
                 <td style="padding:20px 0 30px 0; font-family:'宋体';">
-                	银行名称 收款人信息：全称 ××× ；帐号或地址 ××× ；开户行 ×××。 <br />
-                    注意事项：办理电汇时，请在电汇单“汇款用途”一栏处注明您的订单号。
+                	 收货人姓名：<font color="#ff4e00"><b>${ousername }</b></font>;
+                	 收货人电话：<font color="#ff4e00"><b>${ouserphone }</b></font>;
+                	 收货地址：<font color="#ff4e00"><b>${oaddress }</b></font> 。 <br />
                 </td>
               </tr>
               <tr>
                 <td>
-                	<a href="#">首页</a> &nbsp; &nbsp; <a href="#">用户中心</a>
+                	 <font color="#ff4e00"><b><a href="${pageContext.request.contextPath }/index">首页</a> &nbsp; &nbsp; <a href="${pageContext.request.contextPath}/memberuser">用户中心</a></b></font>
                 </td>
               </tr>
             </table>        	
@@ -153,7 +154,7 @@
              	   <td>
                 		<p style="font-size:22px;">提示 !</p>
                	     <b style="color:#ff4e00; font-size:16px; font-family:'宋体';">您的余额不足以支付整个订单，请充值后继续付款</b>
-               	 		<div class="backs"><a href="${pageContext.request.contextPath }/chargeMoney">点我充值</a></div>
+               	 		<div class="backs"><a href="${pageContext.request.contextPath }/member-money">点我充值</a></div>
               	  </td>
              	 </tr>
            	 </table>        	

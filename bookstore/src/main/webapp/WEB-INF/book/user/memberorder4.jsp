@@ -1,43 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
         
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/menu.js"></script>    
         
 	<script type="text/javascript" src="js/select.js"></script>
-	<script type="text/javascript" >
-		jq(function(){
-			jq("#sub").click(function(){
-				var text = jq("#aaa").val();
-				jq.post("${pageContext.request.contextPath}/mmc",
-						{"text":text,"uuname":"${uuname}"},function(data){
-							window.location.replace(window.location.href);
-						},"json")
-			})
-			jq("#re").click(function(){
-				window.location.replace(window.location.href);
-			})
-		})
-	</script>
-        
+	
     
-<title></title>
+<title>博库智慧城</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
 <div class="soubg">
 	<div class="sou">
     	<!--Begin 所在收货地区 Begin-->
+
         <!--End 所在收货地区 End-->
         <span class="fr">
-       	 	<c:if test="${empty(uuname)}" var="flag">
+        	<c:if test="${empty(uuname)}" var="flag">
 					<span class="fl">你好，请<a
 						href="${pageContext.servletContext.contextPath }/login"
 						style="color: #ff4e00;">登录</a>&nbsp; <a
@@ -52,7 +38,7 @@
 						href="${pageContext.request.contextPath }/logout"
 						style="color: #ff4e00;">注销</a>&nbsp;|&nbsp;<a href="${pageContext.request.contextPath }/show2">我的订单</a>&nbsp;|
 					</span>
-					</c:if> 
+				</c:if>
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -60,7 +46,7 @@
                     	<div class="s_city_t"></div>
                         <div class="ss_list_c">
                         	<ul>
-                            	<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+                            	<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
                             </ul>
                         </div>
                     </div>     
@@ -98,15 +84,17 @@
     </div>
 </div>
 <div class="m_top_bg">
-    	<div class="top">
-		<div class="logo" style="margin-left: 500px">
-			<a href="${pageContext.request.contextPath }/index"><img src="images/logo.png" /></a></div>
-		<c:if test="${checkBuyCar }" var="fla">
+		<div class="top">
+			<div class="logo" style="margin-left: 500px">
+				<a href="${pageContext.request.contextPath }/index"><img
+					src="images/logo.png" /></a>
+			</div>
+			<c:if test="${checkBuyCar }" var="fla">
 				<!-- 购物车有信息 -->
 				<div class="i_car">
 					<div class="car_t">
-						<a href="${pageContext.request.contextPath}/show">购物车
-							[ <span>${tAmount }</span> ]
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${tAmount }</span>
+							]
 						</a>
 					</div>
 					<div class="car_bg">
@@ -143,19 +131,20 @@
 					</div>
 				</div>
 			</c:if>
-			
+
 			<!-- 购物车没信息 -->
 			<c:if test="${not fla }">
 				<div class="i_car">
-			<div class="car_t"><a href="${pageContext.request.contextPath}/show">购物车 [
-					<span>0</span> ]
-				</a>
-			</div>
-		
-		</div>
+					<div class="car_t">
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>0</span>
+							]
+						</a>
+					</div>
+
+				</div>
 			</c:if>
+		</div>
 	</div>
-</div>
 <!--End Header End--> 
 <div class="i_bg bg_color">
     <!--Begin 用户中心 Begin -->
@@ -169,20 +158,20 @@
             	<div class="left_m_t t_bg1">订单中心</div>
                 <ul>
                 	<li><a href="${pageContext.request.contextPath}/show2">个人订单</a></li>
-                	<li><a href="${pageContext.request.contextPath}/show2">全部订单</a></li>
+                	<li><a href="${pageContext.request.contextPath}/show3">全部订单</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
@@ -190,6 +179,7 @@
             	<div class="left_m_t t_bg4">商品中心</div>
                 <ul>
                 	<li><a href="${pageContext.request.contextPath}/emps">商品管理</a></li>
+                	<li><a href="${pageContext.request.contextPath}/salesAnalysis">销售分析</a></li>
                 </ul>
             </div>
             </c:if>
@@ -206,61 +196,43 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
             </c:if>
         </div>
 		<div class="m_right">
-            <p></p>			
-            <div class="mem_tit">
-            	<span class="fr" style="font-size:12px; color:#55555; font-family:'宋体'; margin-top:5px;"></span>充值
-            </div>
-			<table border="0" class="ma_tab" style="width:930px; margin-bottom:30px;" cellspacing="0" cellpadding="0">
-              <tr>
-              	<td class="ma_a" colspan="3" align="right"><a href="${pageContext.request.contextPath}/chargeMoney">充值</a>|<a href="#">提现</a>|<a href="#">查看账户明细</a>|<a href="#">查看申请记录</a></td>
-              </tr>
-              <tr>
-                <td>充值金额</td>
-                <td colspan="2"><input type="text" id="aaa" value="" class="add_ipt" style="width:190px;" /></td>
-              </tr>
-              <tr valign="top" height="180">
-                <td>会员备注</td>
-                <td colspan="2" style="padding-top:10px;"><textarea class="add_txt" style="width:540px; height:130px;"></textarea></td>
-              </tr>
-              <tr>
-                <td colspan="3">支付方式</td>
-              </tr>
+            <p></p>
+            <div class="mem_tit">订单详情<span style="float:right" ><a href="${pageContext.request.contextPath}/show2">返回</a></span></div>
+            <table border="0" class="order_tab" style="width:930px; text-align:center; margin-bottom:30px;" cellspacing="0" cellpadding="0">
               <tr>                                                                                                                                                    
-                <td width="200" align="center">名称</td>                                                            
-                <td width="500" align="center">描述</td>
-                <td width="230" align="center">手续费</td>                   
+                <td width="20%">订单号</td>
+                <td width="20%">下单信息</td>
+                <td width="20%">下单用户</td>
+                <td width="10%">订单金额</td>
+                <td width="10%">订单数量</td>
+                <td width="20%">订单状态</td>
               </tr>
+              <c:forEach items="${doi}" var="order">
               <tr>
-                <td><label class="r_rad"><input type="checkbox" name="pay" checked="checked"/></label><label class="r_txt">支付宝</label></td>
-                <td>
-                	支付宝网站(www.alipay.com) 是国内先进的网上支付平台。<br />
-                    支付宝收款接口：在线即可开通，<font color="#ff4e00">零预付，免年费，</font>单笔阶梯费率，无流量限制。<br />
-                    <a href="#" style="color:#ff4e00;">立即在线申请</a>
-                </td>
-                <td align="center">0</td>
+                <td><font color="#ff4e00">${order.orderid }</font></td>
+                <td>${order.oname }</td>
+                <td>${order.ouid }</td>
+                <td>${order.oprice }</td>
+                <td>${order.onumber }</td>
+                <td style="color: green">支付成功</td>
               </tr>
-              <tr>
-                <td colspan="7" align="right">您当前的可用资金为：￥${userPrice }</td>
-              </tr>
-			</table>
-            
-            <p align="center">
-            	<input type="submit" id="sub" value="提交申请" class="btn_tj" />&nbsp; &nbsp; <input type="reset" id="re" value="重置表单" class="btn_tj" />
-            </p>
+              </c:forEach>
+              
+            </table>
         </div>
     </div>
 	<!--End 用户中心 End--> 

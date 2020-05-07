@@ -28,34 +28,36 @@
 <script src="${pageContext.request.contextPath }/js/jquery-1.11.3.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$(".j_car")
-				.click(
-						function() {
-							var uuname = "${uuname}";
-							var uubookid = $(this).attr("d");
-							$
-									.post(
-											"${pageContext.request.contextPath}/addBuyCar",
-											{
-												"sbid" : uubookid,
-												"suid" : uuname
-											},
-											function(data) {
-												if (data.result) {
-													alert("添加成功");
-													window.location
-															.replace(window.location.href);
-												} else {
-													alert("您尚未登录，请登录");
-													window.location.href = "${pageContext.request.contextPath}/login";
-												}
-											}, "json")
-						})
+		$(".j_car").click(function() {
+			var uuname = "${uuname}";
+			var uubookid = $(this).attr("d");
+			var bnumber = $(this).attr("num");
+			if(bnumber==""||parseInt(bnumber)==0){
+				alert("该图书已售罄，请选择其他图书");
+				window.location.replace(window.location.href);
+			}else{
+				
+				$.post(
+					"${pageContext.request.contextPath}/addBuyCar",
+					{
+						"sbid" : uubookid,
+						"suid" : uuname
+					},
+					function(data) {
+						if (data.result) {
+							alert("添加成功");
+							window.location.replace(window.location.href);
+						} else {
+							alert("您尚未登录，请登录");
+							window.location.href = "${pageContext.request.contextPath}/login";
+						}
+					}, "json")
+			}
+		})
 	})
 </script>
 <script type="text/javascript">
 	$(function() {
-		
 			$(".ss").click(function() {
 				var uuname = "${uuname}";
 				if(${empty(uuname)}){
@@ -69,16 +71,16 @@
 						"suid" : uuname
 						},function(data) {
 							if (data.result) {
-								alert("添加成功");
+								alert("收藏成功");
 								}
 								else{
-									alert("删除成功");
+									alert("取消收藏");
 								}}, "json")
 							})
 	})
 </script>
 
-<title>网上书店</title>
+<title>博库智慧城</title>
 
 </head>
 <body>
@@ -110,7 +112,7 @@
 							<div class="s_city_t"></div>
 							<div class="ss_list_c">
 								<ul>
-									<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+									<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
 								</ul>
 							</div>
 						</div>
@@ -122,8 +124,6 @@
 							<div class="ss_list_c">
 								<ul>
 									<li><a href="#">客户服务</a></li>
-									<li><a href="#">客户服务</a></li>
-									<li><a href="#">客户服务</a></li>
 								</ul>
 							</div>
 						</div>
@@ -134,7 +134,6 @@
 							<div class="s_city_t"></div>
 							<div class="ss_list_c">
 								<ul>
-									<li><a href="#">网站导航</a></li>
 									<li><a href="#">网站导航</a></li>
 								</ul>
 							</div>
@@ -306,7 +305,7 @@
 				</div>
 			</c:if>
 			<div class="l_list">
-				<table border="0"
+				<!-- <table border="0"
 					style="width: 100%; margin-bottom: 30px; border: 1px solid #eaeaea;"
 					cellspacing="0" cellpadding="0">
 					<tr valign="top">
@@ -319,7 +318,7 @@
 							href="#">嫩肤（3）</a>
 						</td>
 					</tr>
-				</table>
+				</table> -->
 				<div class="list_t">
 					<span class="fr" style="font-size: 15px">共发现<span
 						style="color: #FF3200">${pageInfo.total }</span>件商品
@@ -343,8 +342,8 @@
 									<a href="${pageContext.request.contextPath}/product?bid=${bra.bid}"> ${bra.bname }---${bra.bauthor }</a>
 								</div>
 								<div class="carbg">
-									<a href="#" class="ss" d="${bra.bid }">收藏</a> <a href="#" class="j_car"
-										d="${bra.bid }">加入购物车</a>
+									<a href="#" class="ss" d="${bra.bid }" >收藏</a>
+									 <a href="#" class="j_car" d="${bra.bid }" num="${bra.bnumber}">加入购物车</a>
 								</div>
 							</li>
 						</c:forEach>

@@ -13,7 +13,7 @@
 	<script type="text/javascript" src="js/select.js"></script>
 	
     
-<title>订单信息管理</title>
+<title>博库智慧城</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -46,7 +46,7 @@
                     	<div class="s_city_t"></div>
                         <div class="ss_list_c">
                         	<ul>
-                            	<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+                            	<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
                             </ul>
                         </div>
                     </div>     
@@ -84,7 +84,67 @@
     </div>
 </div>
 <div class="m_top_bg">
-</div>
+		<div class="top">
+			<div class="logo" style="margin-left: 500px">
+				<a href="${pageContext.request.contextPath }/index"><img
+					src="images/logo.png" /></a>
+			</div>
+			<c:if test="${checkBuyCar }" var="fla">
+				<!-- 购物车有信息 -->
+				<div class="i_car">
+					<div class="car_t">
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${tAmount }</span>
+							]
+						</a>
+					</div>
+					<div class="car_bg">
+						<ul class="cars"
+							style="height: 200px; overflow-x: hidden; overflow-y: scroll">
+							<c:forEach items="${cList }" var="cartbook" varStatus="vs">
+								<li>
+									<div class="img">
+										<a href="#"><img
+											src="${pageContext.request.contextPath }/upload${cartbook.spic }"
+											width="58" height="58" /></a>
+									</div>
+									<div class="name">
+										<a href="#">${cartbook.sname }</a>
+									</div>
+									<div class="price">
+										<font color="#ff4e00">${cartbook.sprice }</font>
+										X${cartbook.snumber }
+									</div>
+								</li>
+							</c:forEach>
+						</ul>
+						<div class="price_sum">
+							共计&nbsp; <font color="#ff4e00">￥</font><span>${tPrice }</span>
+						</div>
+						<a href="${pageContext.request.contextPath}/show">
+							<div
+								style="height: 40px; width: 100px; background-color: #F9530A; border: 0px; text-align: center">
+								<span style="font-size: 16px; color: white">去购物车结算</span>
+							</div>
+						</a>
+
+						<!--End 购物车已登录 End-->
+					</div>
+				</div>
+			</c:if>
+
+			<!-- 购物车没信息 -->
+			<c:if test="${not fla }">
+				<div class="i_car">
+					<div class="car_t">
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>0</span>
+							]
+						</a>
+					</div>
+
+				</div>
+			</c:if>
+		</div>
+	</div>
 <!--End Header End--> 
 <div class="i_bg bg_color">
     <!--Begin 用户中心 Begin -->
@@ -104,14 +164,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
@@ -136,14 +196,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             

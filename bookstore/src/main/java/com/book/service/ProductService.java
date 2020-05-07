@@ -23,4 +23,5 @@ public interface ProductService {
 	int getProductNumber();
 	List<Map<String, Object>> getProductAll();
 	void updateCategory(String cid,String catergory);
+	void subtrace(String sid, int number);
 }

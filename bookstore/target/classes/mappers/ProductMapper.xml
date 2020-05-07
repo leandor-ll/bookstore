@@ -312,4 +312,8 @@
   <update id="updateCategory">
   	update c_book set category=#{arg1} where cid = #{arg0}
   </update>
+  
+  <update id="subtrace">
+  	update b_book set bnumber = bnumber - #{arg1}  where bid = #{arg0}
+  </update>
 </mapper>

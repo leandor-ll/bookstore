@@ -18,10 +18,30 @@ public class OrderList {
     private String opic;
 
     private String oaddress;
+    
+    private String ousername;
+    
+    private String ouserphone;
 
     private String ocategory;
+    
+    public String getOusername() {
+		return ousername;
+	}
 
-    public String getOuid() {
+	public void setOusername(String ousername) {
+		this.ousername = ousername;
+	}
+
+	public String getOuserphone() {
+		return ouserphone;
+	}
+
+	public void setOuserphone(String ouserphone) {
+		this.ouserphone = ouserphone;
+	}
+
+	public String getOuid() {
         return ouid;
     }
 

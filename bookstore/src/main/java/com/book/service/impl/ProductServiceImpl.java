@@ -79,4 +79,12 @@ public class ProductServiceImpl implements ProductService {
 		productDao.updateCategory(cid,catergory);
 		
 	}
+
+
+	@Override
+	public void subtrace(String sid, int uuname) {
+		productDao.subtrace(sid,uuname);
+		
+	}
+
 }

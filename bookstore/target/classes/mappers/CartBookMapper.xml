@@ -265,7 +265,11 @@
  	</select>
  	
  	<select id="getOrderAll1" resultType="com.book.domain.AllOrderList">
- 		select sum(oprice*onumber) allPrice,ouid,orderid  from o_book where ostatus = 2 GROUP by orderid 
+ 		select sum(oprice*onumber) allPrice,ouid,orderid,ousername,ouserphone,oaddress  from o_book where ostatus = 2 GROUP by orderid 
+ 	</select>
+ 	
+ 	<select id="getOrderAllMyself" resultType="com.book.domain.AllOrderList">
+ 		select sum(oprice*onumber) allPrice,ouid,orderid,ousername,ouserphone,oaddress,ostatus  from o_book where ouid=#{arg0} GROUP by orderid 
  	</select>
  	
  	<select id="getPayOut" resultType="object">
@@ -273,7 +277,7 @@
  	</select>
  	
  	<update id="setOrderID">
- 		update o_book set orderid = #{arg0} where ouid = #{arg1} and ostatus = 1
+ 		update o_book set orderid = #{arg0},ousername = #{arg2},ouserphone = ${arg3},oaddress =#{arg4}   where ouid = #{arg1} and ostatus = 1
  	</update>
  	
  	<select id="selectCategoryById" resultType="string">
@@ -296,4 +300,11 @@
  		delete from c_book where cid = #{cid}
  	</delete>
  	
+ 	<select id="queryNumber" resultType="int">
+ 		select snumber from s_book where suid = #{arg1} and sbid = #{arg0}
+ 	</select>
+ 	
+ 	<delete id="deleteMyselfOrderlist">
+ 		delete from o_book where ouid=#{arg0} and orderid = #{arg1}
+ 	</delete>
 </mapper>

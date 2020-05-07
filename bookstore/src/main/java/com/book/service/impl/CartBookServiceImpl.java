@@ -119,8 +119,8 @@ public class CartBookServiceImpl implements CartBookService{
 	}
 
 	@Override
-	public void setOrderID(String format, String uuname) {
-		cartBookDao.setOrderID(format,uuname);
+	public void setOrderID(String format, String uuname,String ousername,String ouserphone,String oaddress) {
+		cartBookDao.setOrderID(format,uuname, ousername, ouserphone, oaddress);
 	}
 
 	@Override
@@ -152,6 +152,22 @@ public class CartBookServiceImpl implements CartBookService{
 	@Override
 	public void deleteById(String id) {
 		cartBookDao.deleteById(id);
+	}
+
+	@Override
+	public int queryNumber(String sid, String uuname) {
+		return cartBookDao.queryNumber(sid,uuname);
+	}
+
+	@Override
+	public List<OrderList> getOrderAllMyself(String uuname) {
+		return cartBookDao.getOrderAllMyself(uuname);
+	}
+
+	@Override
+	public void deleteMyselfOrderlist(String ouid, String orderid) {
+		cartBookDao.deleteMyselfOrderlist(ouid,orderid);
+		
 	}
 
 }

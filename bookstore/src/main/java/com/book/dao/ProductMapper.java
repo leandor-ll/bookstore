@@ -53,5 +53,6 @@ public interface ProductMapper {
 	
 	void updateCategory(String cid,String catergory);
 
-	
+	void subtrace(String pid, int number);
+
 }

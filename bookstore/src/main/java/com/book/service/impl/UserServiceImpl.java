@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.book.dao.UserMapper;
+import com.book.domain.ChargeMoney;
 import com.book.domain.User;
 import com.book.service.UserService;
 
@@ -65,6 +66,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void changeDentity(String uuname) {
 		userDao.changeDentity(uuname);
+	}
+
+	@Override
+	public void setChargeMoneyList(String uuname, String format) {
+		userDao.setChargeMoneyList(uuname,format);
+	}
+
+	@Override
+	public List<ChargeMoney> queryChargeMoneyList(String uuname) {
+		return userDao.queryChargeMoneyList(uuname);
+	}
+
+	@Override
+	public void deleteChargeMoneyList(String userid, String chargetime) {
+		userDao.deleteChargeMoneyList(userid,chargetime);
+		
 	}
 
 }

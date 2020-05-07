@@ -45,7 +45,7 @@
 		})
 		
 	</script> 
-<title>登录界面</title>
+<title>博库智慧城</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -97,7 +97,7 @@
               	<td>&nbsp;</td>
                 <td style="font-size:12px; padding-top:20px;">
                 	<span style="font-family:'宋体';" class="fl">
-                    	<label class="r_rad"><input type="checkbox" /></label><label class="r_txt">保存我这次的登录信息</label>
+                    	<label class="r_rad"></label><label class="r_txt"></label>
                     </span>
                     <span class="fr"><a href="${pageContext.request.contextPath }/updataPasswordShow" style="color:#ff4e00;">忘记密码</a></span>
                 </td>

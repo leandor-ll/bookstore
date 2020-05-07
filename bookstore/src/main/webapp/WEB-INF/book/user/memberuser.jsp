@@ -26,7 +26,7 @@
         	})
         </script> -->
 
-<title>用户信息</title>
+<title>博库智慧城</title>
 </head>
 <body>
 	<!--Begin Header Begin-->
@@ -45,7 +45,8 @@
 					<span class="fl">你好，<a
 						href="${pageContext.request.contextPath}/memberuser">${uuname}</a>&nbsp;
 						<a href="${pageContext.servletContext.contextPath }/regist"
-						style="color: #ff4e00;">免费注册</a>&nbsp;<a href="${pageContext.request.contextPath }/logout"
+						style="color: #ff4e00;">免费注册</a>&nbsp;<a
+						href="${pageContext.request.contextPath }/logout"
 						style="color: #ff4e00;">注销</a>&nbsp;|&nbsp;<a
 						href="${pageContext.request.contextPath }/show2">我的订单</a>&nbsp;|
 					</span>
@@ -56,8 +57,8 @@
 							<div class="s_city_t"></div>
 							<div class="ss_list_c">
 								<ul>
-									<li><a href="#">我的收藏夹</a></li>
-									<li><a href="#">我的收藏夹</a></li>
+									<li><a
+										href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
 								</ul>
 							</div>
 						</div>
@@ -68,8 +69,6 @@
 							<div class="s_city_t"></div>
 							<div class="ss_list_c">
 								<ul>
-									<li><a href="#">客户服务</a></li>
-									<li><a href="#">客户服务</a></li>
 									<li><a href="#">客户服务</a></li>
 								</ul>
 							</div>
@@ -177,17 +176,17 @@
 						<div class="left_m_t t_bg2">会员中心</div>
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/memberuser"
-								class="now">用户信息</a></li>
+								>用户信息</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Collect"
-								class="now">我的收藏</a></li>
+								href="${pageContext.request.contextPath}/member-collect"
+								>我的收藏</a></li>
 						</ul>
 					</div>
 					<div class="left_m">
 						<div class="left_m_t t_bg3">账户中心</div>
 						<ul>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+								href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
 						</ul>
 					</div>
 
@@ -195,7 +194,8 @@
 						<div class="left_m_t t_bg4">商品中心</div>
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/emps">商品管理</a></li>
-							<li><a href="${pageContext.request.contextPath}/salesAnalysis">销售分析</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/salesAnalysis">销售分析</a></li>
 						</ul>
 					</div>
 				</c:if>
@@ -213,17 +213,17 @@
 						<div class="left_m_t t_bg2">会员中心</div>
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/memberuser"
-								class="now">用户信息</a></li>
+								>用户信息</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Collect"
-								class="now">我的收藏</a></li>
+								href="${pageContext.request.contextPath}/member-collect"
+								>我的收藏</a></li>
 						</ul>
 					</div>
 					<div class="left_m">
 						<div class="left_m_t t_bg3">账户中心</div>
 						<ul>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+								href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
 						</ul>
 					</div>
 
@@ -239,17 +239,16 @@
 									src="${pageContext.request.contextPath }/upload${userList.upic}"
 									width="90" height="90" id="srcsrc" /></td>
 								<td><br />
-								<div class="m_user">${userList.uname}</div> 
-								<c:if test="${uunameDentity }" var="uudentity">
+									<div class="m_user">${userList.uname}</div> <c:if
+										test="${uunameDentity }" var="uudentity">
 										<br />
 										<font color="#ff4e00">身份：管理员</font>
 										<br />
-								</c:if> 
-								<c:if test="${not uudentity }">
+									</c:if> <c:if test="${not uudentity }">
 										<br />
 										<font color="#ff4e00">身份：普通用户</font>
 										<br />
-								</c:if>
+									</c:if>
 									<div class="m_notice">
 										<!-- 用户中心公告！ -->
 									</div></td>
@@ -257,7 +256,7 @@
 						</table>
 					</div>
 
-					<div class="mem_t">用户信息</div>
+					<div class="mem_t"> <font color="#ff4e00"><b>用户信息</b></font></div>
 					<table border="0" class="mon_tab"
 						style="width: 870px; margin-bottom: 20px;" cellspacing="0"
 						cellpadding="0">
@@ -267,7 +266,7 @@
 								href="${pageContext.request.contextPath }/show2">累计消费</a>：<span>￥${userPayOut }
 									元</span></td>
 							<td width="33%"><a
-								href="${pageContext.request.contextPath }/chargeMoney">账户余额</a>：<span>￥
+								href="${pageContext.request.contextPath }/charge-money">账户余额</a>：<span>￥
 									${userList.uprice} 元</span></td>
 						</tr>
 						<tr>

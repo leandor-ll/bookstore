@@ -12,14 +12,38 @@
            EvPNG.fix('div, ul, img, li, input, a'); 
         </script>
     <![endif]-->
+    <script type="text/javascript" src="js/jquery-1.11.1.min_044d0927.js"></script>
+	<script type="text/javascript" src="js/jquery.bxslider_e88acd1b.js"></script>
         
-    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="js/menu.js"></script>    
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath }/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath }/js/menu.js"></script>    
         
-	<script type="text/javascript" src="js/select.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/js/select.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$(".j_car").click(
+			function() {
+				var uuname = "${uuname}";
+				var uubookid = $(this).attr("d");
+					$.post("${pageContext.request.contextPath}/addBuyCar",
+						{
+							"sbid" : uubookid,
+							"suid" : uuname
+							},function(data) {
+								if (data.result) {
+									alert("添加成功");
+									window.location.replace(window.location.href);
+										} else {
+											alert("您尚未登录，请登录");
+											window.location.href = "${pageContext.request.contextPath}/login";
+												}
+										}, "json")
+									})
+								})
+</script>
         
     
-<title>尤洪</title>
+<title>博库智慧城</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -46,12 +70,13 @@
 					</c:if> 
         	<span class="ss">
             	<div class="ss_list">
-                	<a href="#">收藏夹</a>
+                	<a >收藏夹</a>
                     <div class="ss_list_bg">
                     	<div class="s_city_t"></div>
                         <div class="ss_list_c">
                         	<ul>
-                            	<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+                            	<li><a href="#">我的收藏夹</a></li>
+                                <li><a href="#">我的收藏夹</a></li>
                             </ul>
                         </div>
                     </div>     
@@ -89,16 +114,51 @@
     </div>
 </div>
 <div class="m_top_bg">
-	<div class="m_top_bg">
-        	<div class="top">
-		<div class="m_logo" style="margin-left: 500px">
-			<a href="${pageContext.request.contextPath }/index"><img src="images/logo.png" /></a></div>
-		<c:if test="${checkBuyCar }" var="fla">
+	<div class="top">
+		<div class="logo">
+			<a href="${pageContext.request.contextPath }/index"><img
+				src="images/logo.png" /></a>
+		</div>
+		<div class="search">
+			<form action="${pageContext.request.contextPath }/brandlist">
+				<input type="text" name="bname" value="${param.bname }" class="s_ipt" />
+				<input type="submit" value="搜索" class="s_btn" />
+			</form>
+			<span class="fl"><a href="#">趣味物理学</a><a href="#">Python编程</a><a
+				href="#">算法导论</a><a href="#">零基础学C语言</a><a href="#">牛津高阶</a><a
+				href="#">小王子</a></span>
+		</div>
+
+		<!-- 购物车显示信息 -->
+		<c:if test="${empty(uuname) }" var="flag">
+			<div class="i_car">
+				<div class="car_t">
+					购物车 [ <span>0</span> ]
+				</div>
+				<div class="car_bg" style="width: 27 0px; height: 90px;">
+					<!--Begin 购物车未登录 Begin-->
+					<div
+						style="text-align: center; margin-left: 5px; font-size: 16px; margin-top: 20px">
+						请 <a href="${pageContext.request.contextPath}/login"
+							style="color: #FF3200"> 登录</a> 后查询购物车
+					</div>
+					<!--End 购物车未登录 End-->
+					<!--Begin 购物车已登录 Begin-->
+
+					<div class="price_a">
+						<a href="#">去购物车结算</a>
+					</div>
+					<!--End 购物车已登录 End-->
+				</div>
+			</div>
+		</c:if>
+		<c:if test="${not flag }">
+			<c:if test="${checkBuyCar }" var="fla">
 				<!-- 购物车有信息 -->
 				<div class="i_car">
 					<div class="car_t">
-						<a href="${pageContext.request.contextPath}/show">购物车
-							[ <span>${tAmount }</span> ]
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${ttAmount }</span>
+							]
 						</a>
 					</div>
 					<div class="car_bg">
@@ -135,19 +195,20 @@
 					</div>
 				</div>
 			</c:if>
-			
+
 			<!-- 购物车没信息 -->
 			<c:if test="${not fla }">
 				<div class="i_car">
-			<div class="car_t"><a href="${pageContext.request.contextPath}/show">购物车 [
-					<span>0</span> ]
-				</a>
-			</div>
-		
-		</div>
+					<div class="car_t">
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>0</span>
+							]
+						</a>
+					</div>
+
+				</div>
 			</c:if>
+		</c:if>
 	</div>
-    </div>
 	
 </div>
 <!--End Header End--> 
@@ -169,14 +230,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
@@ -201,51 +262,50 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/chargeMoney">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
             </c:if>
         </div>
 		<div class="m_right">
-            <p></p>			
+            <p></p>
             <div class="mem_tit">
-            	<span class="fr" style="font-size:12px; color:#55555; font-family:'宋体'; margin-top:5px;">共发现0件</span>会员余额
+            	<span class="fr" style="font-size:12px; color:#55555; font-family:'宋体'; margin-top:5px;">共发现${tAmount }件</span><font color="#ff4e00"><b>我的收藏</b></font>
             </div>
-			<table border="0" class="ma_tab" style="width:930px; text-align:center; margin-bottom:30px;" cellspacing="0" cellpadding="0">
+           	<table border="0" class="order_tab" style="width:930px;" cellspacing="0" cellpadding="0">
+              <c:if test="${empty(collectList) }" var="ooo">
+              		<td colspan="5" ><img src="${pageContext.request.contextPath }/images/ordernull.jpg"></td>
+              </c:if>
+              <c:if test="${not ooo }">
+               <tr>                                                                                                                                       
+                <td align="center" width="420">商品名称</td>
+                <td align="center" width="180">价格</td>
+                <td align="center" width="270">操作</td>
+              </tr>
+              <c:forEach items="${collectList }" var="enshrineBookService">
               <tr>
-              	<td class="ma_a" colspan="7" align="right"><a href="${pageContext.request.contextPath}/alipay.trade.page.pay">充值</a>|<a href="#">提现</a>|<a href="#">查看账户明细</a>|<a href="#">查看申请记录</a></td>
+                <td style="font-family:'宋体';">
+                	<div class="sm_img"><img src="${pageContext.request.contextPath }/upload${enshrineBookService.epic }" width="48" height="48" /></div>${enshrineBookService.ebname }
+                </td>
+                <td align="center">￥${enshrineBookService.eprice }</td>
+                <td align="center"><!-- <a href="#">关注</a> -->&nbsp; &nbsp; 
+                	<a  class="j_car" d="${enshrineBookService.ebid }">加入购物车</a>&nbsp; &nbsp;
+                 	<a href="${pageContext.request.contextPath}/delCollect?sbid=${enshrineBookService.ebid }&suid=${enshrineBookService.euname }">删除</a></td>
               </tr>
-              <tr>                                                                                                                                                    
-                <td width="155">操作时间</td>                                                                                                                                         
-                <td width="110">类型</td>
-                <td width="110">金额</td>
-                <td width="130">会员备注</td>
-                <td width="155">管理员备注</td>
-                <td width="130">状态</td>
-                <td width="140">操作</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="7" align="right">您当前的可用资金为：￥0.00</td>
-              </tr>
-			</table>
-			
+              </c:forEach>
+              </c:if>
+            </table>
+
+
+            
         </div>
     </div>
 	<!--End 用户中心 End--> 

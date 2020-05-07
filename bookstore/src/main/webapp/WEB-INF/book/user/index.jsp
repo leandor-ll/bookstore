@@ -35,7 +35,7 @@ $(function(){
 })
 </script>
 
-<title>主界面</title>
+<title>博库智慧城</title>
 
 </head>
 <body>
@@ -50,7 +50,7 @@ $(function(){
 						href="${pageContext.servletContext.contextPath }/login"
 						style="color: #ff4e00;">登录</a>&nbsp; <a
 						href="${pageContext.servletContext.contextPath }/regist"
-						style="color: #ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|
+						style="color: #ff4e00;">免费注册</a>&nbsp;
 					</span>
 				</c:if> <c:if test="${not flag}">
 					<span class="fl">你好，<a
@@ -62,14 +62,14 @@ $(function(){
 						style="color: #ff4e00;">注销</a>&nbsp;|&nbsp;<a
 						href="${pageContext.request.contextPath}/show2">我的订单</a>&nbsp;|
 					</span>
-				</c:if> <span class="ss">
+				 <span class="ss">
 					<div class="ss_list">
-						<a href="#">收藏夹</a>
+						<a href="${pageContext.servletContext.contextPath }/login">收藏夹</a>
 						<div class="ss_list_bg">
 							<div class="s_city_t"></div>
 							<div class="ss_list_c">
 								<ul>
-									<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+									<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
 								</ul>
 							</div>
 						</div>
@@ -99,7 +99,9 @@ $(function(){
 							</div>
 						</div>
 					</div>
-			</span> <span class="fl">|&nbsp;关注我们：</span> <span class="s_sh"><a
+			</span>
+			</c:if>
+			 <span class="fl">|&nbsp;关注我们：</span> <span class="s_sh"><a
 					href="#" class="sh1">新浪</a><a href="#" class="sh2">微信</a></span> <span
 				class="fr">|&nbsp;<a href="#">手机版&nbsp;<img
 						src="images/s_tel.png" align="absmiddle" /></a></span>
@@ -117,155 +119,11 @@ $(function(){
 		<div class="menu">
 			<!--Begin 商品分类详情 Begin-->
 			<div class="nav">
-				<div class="nav_t">
+				<div class="nav_t" style="background-color: light-red">
 					<a href="${pageContext.request.contextPath}/brandlist"
 						style="color: white">全部商品分类</a>
 				</div>
-				<div class="leftNav">
-					<ul>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav1.png" /></span> <span class="fl">经济馆</span>
-							</div>
-							<div class="zj">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav2.png" /></span> <span class="fl">文学馆</span>
-							</div>
-							<div class="zj" style="top: -40px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav3.png" /></span> <span class="fl">艺术馆</span>
-							</div>
-							<div class="zj" style="top: -80px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav4.png" /></span> <span class="fl">科技馆</span>
-							</div>
-							<div class="zj" style="top: -120px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav5.png" /></span> <span class="fl">IT馆</span>
-							</div>
-							<div class="zj" style="top: -160px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav6.png" /></span> <span class="fl">人文馆</span>
-							</div>
-							<div class="zj" style="top: -200px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav7.png" /></span> <span class="fl">历史馆</span>
-							</div>
-							<div class="zj" style="top: -240px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav8.png" /></span> <span class="fl">教育馆</span>
-							</div>
-							<div class="zj" style="top: -280px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav9.png" /></span> <span class="fl">杂志馆</span>
-							</div>
-							<div class="zj" style="top: -320px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="fj">
-								<span class="n_img"><span></span><img
-									src="images/nav9.png" /></span> <span class="fl">杂志馆</span>
-							</div>
-							<div class="zj" style="top: -320px;">
-								<div class="zj_l"></div>
-								<div class="zj_r">
-									<a href="#"><img src="images/n_img1.jpg" width="236"
-										height="200" /></a> <a href="#"><img src="images/n_img2.jpg"
-										width="236" height="200" /></a>
-								</div>
-							</div>
-						</li>
-
-					</ul>
-				</div>
+				
 			</div>
 			<!--End 商品分类详情 End-->
 			<ul class="menu_r">
@@ -279,24 +137,21 @@ $(function(){
 				<li><a href="#07">教育类</a></li>
 				<li><a href="#08">杂志期刊</a></li>
 			</ul>
-			<div class="m_ad">欢迎进入易买网！</div>
+			<div class="m_ad">欢迎来到博库智慧城！</div>
 		</div>
 	</div>
 	<!--End Menu End-->
 	<div class="i_bg bg_color">
 		<div class="i_ban_bg">
 			<!--Begin Banner Begin-->
-			<div class="banner">
+			<div class="">
 				<div class="top_slide_wrap">
 					<ul class="slide_box bxslider">
-						<li><img src="images/zz.jpg" width="740" height="401" /></li>
-						<li><img src="images/zz.jpg" width="740" height="401" /></li>
-						<li><img src="images/zz.jpg" width="740" height="401" /></li>
+						<li><img src="images/index2.jpg" width="100%" height="401" /></li>
+						<li><img src="images/index1.jpg" width="100%" height="401" /></li>
+						<li><img src="images/index7.jpg" width="100%" height="401" /></li>
 					</ul>
-					<div class="op_btns clearfix">
-						<a href="#" class="op_btn op_prev"><span></span></a> <a href="#"
-							class="op_btn op_next"><span></span></a>
-					</div>
+				
 				</div>
 			</div>
 			<script type="text/javascript">
@@ -310,54 +165,13 @@ $(function(){
 				})();
 			</script>
 			<!--End Banner End-->
-			<div class="inews">
-				<div class="news_t">
-					<span class="fr"><a href="http://www.hao123.com">更多 ></a></span>新闻资讯
-				</div>
-				<ul>
-					<li><span>[ 特惠 ]</span><a href="#">掬一轮明月 表无尽惦念</a></li>
-					<li><span>[ 公告 ]</span><a href="#">好奇金装成长裤新品上市</a></li>
-					<li><span>[ 特惠 ]</span><a href="#">大牌闪购 · 抢！</a></li>
-					<li><span>[ 公告 ]</span><a href="#">发福利 买车就抢千元油卡</a></li>
-					<li><span>[ 公告 ]</span><a href="#">书籍低至五折</a></li>
-				</ul>
-				<div class="charge_t">
-					会员充值
-					<div class="ch_t_icon"></div>
-				</div>
-				<form>
-					<table border="0" style="width: 205px; margin-top: 10px;"
-						cellspacing="0" cellpadding="0">
-						<tr height="35">
-							<td width="33">号码</td>
-							<td><input type="text" value="" class="c_ipt" /></td>
-						</tr>
-						<tr height="35">
-							<td>面值</td>
-							<td><select class="jj" name="city">
-									<option value="0" selected="selected">100元</option>
-									<option value="1">50元</option>
-									<option value="2">30元</option>
-									<option value="3">20元</option>
-									<option value="4">10元</option>
-							</select> <span style="color: #ff4e00; font-size: 14px;">￥99.5</span></td>
-						</tr>
-						<tr height="35">
-							<td colspan="2"><input type="submit" value="立即充值"
-								class="c_btn" /></td>
-						</tr>
-					</table>
-				</form>
-			</div>
+			
 		</div>
 		<!--Begin 热门商品 Begin-->
 		<div class="content mar_10">
 			<div class="h_l_img">
 				<div class="img">
-					<img src="images/101.jpg" width="188" height="188" />
-				</div>
-				<div class="pri_bg">
-					<span class="price fl">￥53.00</span> <span class="fr">16R</span>
+					<img src="images/index4.jpg" width="188" height="188" />
 				</div>
 			</div>
 			<div class="hot_pro">
@@ -444,7 +258,7 @@ $(function(){
 		<!--Begin 限时特卖 Begin-->
 		<div class="i_t mar_10">
 			<span class="fl">限时特卖</span> <span class="i_mores fr"><a
-				href="#">更多</a></span>
+				href="${pageContext.request.contextPath}/brandlist">更多</a></span>
 		</div>
 		<div class="content">
 			<div class="i_sell">
@@ -531,21 +345,18 @@ $(function(){
 		<div class="i_t mar_10">
 
 			<span class="floor_num">2F</span> <span class="fl" id="01">经济类</span>
-			<span class="i_mores fr"><a href="#">咖啡</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">休闲零食</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">饼干糕点</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">冲饮谷物</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">营养保健</a> </span>
+			
 		</div>
 		<div class="content">
 			<div class="food_left">
 				<div class="food_ban">
 					<div id="imgPlay2">
 						<ul class="imgs" id="actor2">
-							<li><a href="#"><img src="images/zz.jpg" width="211"
+							<li><a href="#"><img src="images/22.jpg" width="211"
 									height="286" /></a></li>
-							<li><a href="#"><img src="images/zz.jpg" width="211"
+							<li><a href="#"><img src="images/22.jpg" width="211"
 									height="286" /></a></li>
-							<li><a href="#"><img src="images/zz.jpg" width="211"
+							<li><a href="#"><img src="images/22.jpg" width="211"
 									height="286" /></a></li>
 						</ul>
 						<div class="prev_f">上一张</div>
@@ -597,10 +408,7 @@ $(function(){
 		<!--Begin 个人美妆 Begin-->
 		<div class="i_t mar_10">
 			<span class="floor_num">3F</span> <span class="fl" id="02">文学类</span>
-			<span class="i_mores fr"><a href="#">洗发护发</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">面膜</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">洗面奶</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">香水</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">沐浴露</a></span>
+			
 		</div>
 		<div class="content">
 			<div class="make_left">
@@ -636,7 +444,7 @@ $(function(){
 									<a class="getP_id">${m['bname']}</a>
 								</div>
 								<div class="price">
-									<font>￥<span>${m['bprice']}</span></font> &nbsp; 16R
+									<font>￥<span>${m['bprice']}</span></font> &nbsp;${cmap[m.bcategory]['category']}
 								</div>
 								<div class="img">
 									<input class="p_id"  value="${m['bid'] }" type="hidden"/>
@@ -658,17 +466,10 @@ $(function(){
 				</ul>
 			</div>
 		</div>
-		<!--End 个人美妆 End-->
-		<div class="content mar_20">
-			<img src="images/mban_1.jpg" width="1200" height="110" />
-		</div>
+		
 		<!--Begin 母婴玩具 Begin-->
 		<div class="i_t mar_10">
 			<span class="floor_num">4F</span> <span class="fl" id="03">艺术类</span>
-			<span class="i_mores fr"><a href="#">营养品</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">孕妈背带裤</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">儿童玩具</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">婴儿床</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">喂奶器</a></span>
 		</div>
 		<div class="content">
 			<div class="baby_left">
@@ -704,7 +505,7 @@ $(function(){
 									<a class="getP_id">${m['bname']}</a>
 								</div>
 								<div class="price">
-									<font>￥<span>${m['bprice']}</span></font> &nbsp; 20R
+									<font>￥<span>${m['bprice']}</span></font> &nbsp;${cmap[m.bcategory]['category']}
 								</div>
 								<div class="img">
 									<input class="p_id"  value="${m['bid'] }" type="hidden"/>
@@ -730,10 +531,6 @@ $(function(){
 		<!--Begin 家居生活 Begin-->
 		<div class="i_t mar_10">
 			<span class="floor_num">5F</span> <span class="fl" id="04">科技类</span>
-			<span class="i_mores fr"><a href="#">床上用品</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">家纺布艺</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">餐具</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">沙发</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">汽车用品</a></span>
 		</div>
 		<div class="content">
 			<div class="home_left">
@@ -769,7 +566,7 @@ $(function(){
 									<a class="getP_id">${m['bname']}</a>
 								</div>
 								<div class="price">
-									<font>￥<span>${m['bprice']}</span></font> &nbsp; 50R
+									<font>￥<span>${m['bprice']}</span></font> &nbsp;${cmap[m.bcategory]['category']}
 								</div>
 								<div class="img">
 									<input class="p_id"  value="${m['bid'] }" type="hidden"/>
@@ -784,9 +581,9 @@ $(function(){
 			</div>
 			<div class="fresh_right">
 				<ul>
-					<li><a href="#"><img src="images/zz.jpg" width="260"
+					<li><a href="#"><img src="images/22.jpg" width="260"
 							height="220" /></a></li>
-					<li><a href="#"><img src="images/zz.jpg" width="260"
+					<li><a href="#"><img src="images/22.jpg" width="260"
 							height="220" /></a></li>
 				</ul>
 			</div>
@@ -795,10 +592,7 @@ $(function(){
 		<!--Begin 数码家电 Begin-->
 		<div class="i_t mar_10">
 			<span class="floor_num">6F</span> <span class="fl" id="05">计算机类</span>
-			<span class="i_mores fr"><a href="#">手机</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">苹果</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">华为手机</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">洗衣机</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">数码配件</a></span>
+			
 		</div>
 		<div class="content">
 			<div class="tel_left">
@@ -834,7 +628,7 @@ $(function(){
 									<a class="getP_id">${m['bname']}</a>
 								</div>
 								<div class="price">
-									<font>￥<span>${m['bprice']}</span></font> &nbsp; 25R
+									<font>￥<span>${m['bprice']}</span></font> &nbsp;${cmap[m.bcategory]['category']}
 								</div>
 								<div class="img">
 									<input class="p_id"  value="${m['bid'] }" type="hidden"/>
@@ -859,11 +653,7 @@ $(function(){
 		</div>
 		<!--End 数码家电 End-->
 		<div class="i_t mar_10">
-			<span class="floor_num">6F</span> <span class="fl" id="06">人文历史类</span>
-			<span class="i_mores fr"><a href="#">手机</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">苹果</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">华为手机</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">洗衣机</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">数码配件</a></span>
+			<span class="floor_num">7F</span> <span class="fl" id="06">人文历史类</span>
 		</div>
 		<div class="content">
 			<div class="tel_left">
@@ -899,7 +689,7 @@ $(function(){
 									<a class="getP_id">${m['bname']}</a>
 								</div>
 								<div class="price">
-									<font>￥<span>${m['bprice']}</span></font> &nbsp; 25R
+									<font>￥<span>${m['bprice']}</span></font> &nbsp; ${cmap[m.bcategory]['category']}
 								</div>
 								<div class="img">
 									<input class="p_id"  value="${m['bid'] }" type="hidden"/>
@@ -924,11 +714,7 @@ $(function(){
 		</div>
 		<!------>
 		<div class="i_t mar_10">
-			<span class="floor_num">6F</span> <span class="fl" id="07">教育类</span>
-			<span class="i_mores fr"><a href="#">手机</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">苹果</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">华为手机</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">洗衣机</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">数码配件</a></span>
+			<span class="floor_num">8F</span> <span class="fl" id="07">教育类</span>
 		</div>
 		<div class="content">
 			<div class="tel_left">
@@ -964,7 +750,7 @@ $(function(){
 									<a class="getP_id">${m['bname']}</a>
 								</div>
 								<div class="price">
-									<font>￥<span>${m['bprice']}</span></font> &nbsp; 25R
+									<font>￥<span>${m['bprice']}</span></font> &nbsp; ${cmap[m.bcategory]['category']}
 								</div>
 								<div class="img">
 									<input class="p_id"  value="${m['bid'] }" type="hidden"/>
@@ -979,9 +765,9 @@ $(function(){
 			</div>
 			<div class="fresh_right">
 				<ul>
-					<li><a href="#"><img src="images/zz.jpg" width="260"
+					<li><a href="#"><img src="images/22.jpg" width="260"
 							height="220" /></a></li>
-					<li><a href="#"><img src="images/zz.jpg" width="260"
+					<li><a href="#"><img src="images/11.jpg" width="260"
 							height="220" /></a></li>
 				</ul>
 			</div>
@@ -989,18 +775,15 @@ $(function(){
 		</div>
 		<!-- -- -->
 		<div class="i_t mar_10">
-			<span class="floor_num">6F</span> <span class="fl" id="08">杂志/期刊</span>
-			<span class="i_mores fr"><a href="#">手机</a>&nbsp; &nbsp; |
-				&nbsp; &nbsp;<a href="#">苹果</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a
-				href="#">华为手机</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="#">洗衣机</a>&nbsp;
-				&nbsp; | &nbsp; &nbsp;<a href="#">数码配件</a></span>
+			<span class="floor_num">9F</span> <span class="fl" id="08">杂志/期刊</span>
+			
 		</div>
 		<div class="content">
 			<div class="tel_left">
 				<div class="tel_ban">
 					<div id="imgPlay6">
 						<ul class="imgs" id="actor6">
-							<li><a href="#"><img src="images/11.jpg" width="211"
+							<li><a href="#"><img src="images/22.jpg" width="211"
 									height="286" /></a></li>
 							<li><a href="#"><img src="images/11.jpg" width="211"
 									height="286" /></a></li>
@@ -1029,7 +812,7 @@ $(function(){
 									<a class="getP_id">${m['bname']}</a>
 								</div>
 								<div class="price">
-									<font>￥<span>${m['bprice']}</span></font> &nbsp; 25R
+									<font>￥<span>${m['bprice']}</span></font> &nbsp; ${cmap[m.bcategory]['category']}
 								</div>
 								<div class="img">
 									<input class="p_id"  value="${m['bid'] }" type="hidden"/>

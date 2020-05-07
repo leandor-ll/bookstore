@@ -16,32 +16,28 @@
 <script type="text/javascript" src="js/select.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$(".ss")
-				.click(
-						function() {
+		$(".ss").click(function() {
 							var uuname = "${uuname}";
 							var uubookid = $(this).attr("d");
-							$
-									.post(
-											"${pageContext.request.contextPath}/addCollect",
-											{
-												"sbid" : uubookid,
-												"suid" : uuname
-											},
-											function(data) {
-												if (data.result) {
-													alert("添加成功");
-													window.location
-															.replace(window.location.href);
-												} else {
-													alert("您尚未登录，请登录");
-													window.location.href = "${pageContext.request.contextPath}/login";
-												}
-											}, "json")
+							$.post(
+									"${pageContext.request.contextPath}/addCollect",
+									{
+										"sbid" : uubookid,
+										"suid" : uuname
+									},
+									function(data) {
+										if (data.result) {
+											alert("添加成功");
+											window.location.replace(window.location.href);
+										} else {
+											alert("您尚未登录，请登录");
+											window.location.href = "${pageContext.request.contextPath}/login";
+										}
+									}, "json")
 						})
 	})
 </script>
-<title>订单信息管理</title>
+<title>博库智慧城</title>
 </head>
 <body>
 	<!--Begin Header Begin-->
@@ -74,7 +70,7 @@
 							<div class="ss_list_c">
 								<ul>
 									<li><a
-										href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+										href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
 								</ul>
 							</div>
 						</div>
@@ -112,68 +108,67 @@
 		</div>
 	</div>
 	<div class="m_top_bg">
-		<div class="m_top_bg">
-			<div class="top">
-				<div class="m_logo" style="margin-left: 500px">
-					<a href="${pageContext.request.contextPath }/index"><img
-						src="images/logo.png" /></a>
-				</div>
-				<c:if test="${checkBuyCar }" var="fla">
-					<!-- 购物车有信息 -->
-					<div class="i_car">
-						<div class="car_t">
-							<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${tAmount }</span>
-								]
-							</a>
-						</div>
-						<div class="car_bg">
-							<ul class="cars"
-								style="height: 200px; overflow-x: hidden; overflow-y: scroll">
-								<c:forEach items="${cList }" var="cartbook" varStatus="vs">
-									<li>
-										<div class="img">
-											<a href="#"><img
-												src="${pageContext.request.contextPath }/upload${cartbook.spic }"
-												width="58" height="58" /></a>
-										</div>
-										<div class="name">
-											<a href="#">${cartbook.sname }</a>
-										</div>
-										<div class="price">
-											<font color="#ff4e00">${cartbook.sprice }</font>
-											X${cartbook.snumber }
-										</div>
-									</li>
-								</c:forEach>
-							</ul>
-							<div class="price_sum">
-								共计&nbsp; <font color="#ff4e00">￥</font><span>${tPrice }</span>
-							</div>
-							<a href="${pageContext.request.contextPath}/show">
-								<div
-									style="height: 40px; width: 100px; background-color: #F9530A; border: 0px; text-align: center">
-									<span style="font-size: 16px; color: white">去购物车结算</span>
-								</div>
-							</a>
-
-							<!--End 购物车已登录 End-->
-						</div>
-					</div>
-				</c:if>
-
-				<!-- 购物车没信息 -->
-				<c:if test="${not fla }">
-					<div class="i_car">
-						<div class="car_t">
-							<a href="${pageContext.request.contextPath}/show">购物车 [ <span>0</span>
-								]
-							</a>
-						</div>
-
-					</div>
-				</c:if>
+		<div class="top">
+			<div class="logo" style="margin-left: 500px">
+				<a href="${pageContext.request.contextPath }/index"><img
+					src="images/logo.png" /></a>
 			</div>
+			<c:if test="${checkBuyCar }" var="fla">
+				<!-- 购物车有信息 -->
+				<div class="i_car">
+					<div class="car_t">
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${tAmount }</span>
+							]
+						</a>
+					</div>
+					<div class="car_bg">
+						<ul class="cars"
+							style="height: 200px; overflow-x: hidden; overflow-y: scroll">
+							<c:forEach items="${cList }" var="cartbook" varStatus="vs">
+								<li>
+									<div class="img">
+										<a href="#"><img
+											src="${pageContext.request.contextPath }/upload${cartbook.spic }"
+											width="58" height="58" /></a>
+									</div>
+									<div class="name">
+										<a href="#">${cartbook.sname }</a>
+									</div>
+									<div class="price">
+										<font color="#ff4e00">${cartbook.sprice }</font>
+										X${cartbook.snumber }
+									</div>
+								</li>
+							</c:forEach>
+						</ul>
+						<div class="price_sum">
+							共计&nbsp; <font color="#ff4e00">￥</font><span>${tPrice }</span>
+						</div>
+						<a href="${pageContext.request.contextPath}/show">
+							<div
+								style="height: 40px; width: 100px; background-color: #F9530A; border: 0px; text-align: center">
+								<span style="font-size: 16px; color: white">去购物车结算</span>
+							</div>
+						</a>
+
+						<!--End 购物车已登录 End-->
+					</div>
+				</div>
+			</c:if>
+
+			<!-- 购物车没信息 -->
+			<c:if test="${not fla }">
+				<div class="i_car">
+					<div class="car_t">
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>0</span>
+							]
+						</a>
+					</div>
+
+				</div>
+			</c:if>
 		</div>
+	</div>
 
 	</div>
 	<!--End Header End-->
@@ -196,17 +191,17 @@
 						<div class="left_m_t t_bg2">会员中心</div>
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/memberuser"
-								class="now">用户信息</a></li>
+								>用户信息</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Collect"
-								class="now">我的收藏</a></li>
+								href="${pageContext.request.contextPath}/member-collect"
+								>我的收藏</a></li>
 						</ul>
 					</div>
 					<div class="left_m">
 						<div class="left_m_t t_bg3">账户中心</div>
 						<ul>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+								href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
 						</ul>
 					</div>
 
@@ -233,17 +228,17 @@
 						<div class="left_m_t t_bg2">会员中心</div>
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/memberuser"
-								class="now">用户信息</a></li>
+								>用户信息</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Collect"
-								class="now">我的收藏</a></li>
+								href="${pageContext.request.contextPath}/member-collect"
+								>我的收藏</a></li>
 						</ul>
 					</div>
 					<div class="left_m">
 						<div class="left_m_t t_bg3">账户中心</div>
 						<ul>
 							<li><a
-								href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+								href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
 						</ul>
 					</div>
 
@@ -251,27 +246,35 @@
 			</div>
 			<div class="m_right">
 				<p></p>
-				<div class="mem_tit">全部订单</div>
+				<div class="mem_tit"><font color="#ff4e00"><b>全部订单</b></font></div>
 				<table border="0" class="order_tab"
 					style="width: 930px; text-align: center; margin-bottom: 30px;"
 					cellspacing="0" cellpadding="0">
-					<tr>
-						<td width="20%">订单号</td>
-						<td width="25%">下单用户</td>
-						<td width="15%">订单总金额</td>
-						<td width="25%">操作</td>
-					</tr>
 					<c:if test="${empty(orderList) }" var="ooo">
 						<td colspan="5"><img
 							src="${pageContext.request.contextPath }/images/ordernull.jpg"></td>
 					</c:if>
 					<c:if test="${not ooo }">
+					<tr>
+						<td width="15%">订单号</td>
+						<td width="10%">下单用户</td>
+						<td width="15%">订单总金额</td>
+						<td width="10%">收货人姓名</td>
+						<td width="15%">收货人电话</td>
+						<td width="20%">收货地址</td>
+						<td width="15%">操作</td>
+					</tr>
 						<c:forEach items="${ orderList}" var="prod">
 							<tr>
 								<td><font color="#ff4e00">${prod.orderid }</font></td>
 								<td>${prod.ouid }</td>
 								<td>${prod.allPrice }</td>
-								<td><a href="${pageContext.request.contextPath }/queryId?id=${prod.orderid }" d="${prod.orderid }" f="${prod.ouid }">详情</a></td>
+								<td>${prod.ousername }</td>
+								<td>${prod.ouserphone }</td>
+								<td>${prod.oaddress }</td>
+								<td>
+									<a href="${pageContext.request.contextPath }/queryId?id=${prod.orderid }" d="${prod.orderid }" f="${prod.ouid }">详情</a>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -448,14 +451,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
@@ -480,14 +483,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
@@ -495,7 +498,7 @@
         </div>
 		<div class="m_right">
             <p></p>
-            <div class="mem_tit">全部订单</div>
+            <div class="mem_tit"><font color="#ff4e00"><b>全部订单</b></font></div>
             <table border="0" class="order_tab" style="width:930px; text-align:center; margin-bottom:30px;" cellspacing="0" cellpadding="0">
               <tr>    
               	<td width="20%">订单号</td>

@@ -86,7 +86,7 @@
 		})
 	})
 </script>
-<title>尤洪</title>
+<title>博库智慧城</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -157,16 +157,17 @@
     </div>
 </div>
 <div class="m_top_bg">
-	<div class="m_top_bg">
-        	<div class="top">
-		<div class="m_logo" style="margin-left: 500px">
-			<a href="${pageContext.request.contextPath }/index"><img src="images/logo.png" /></a></div>
-		<c:if test="${checkBuyCar }" var="fla">
+		<div class="top">
+			<div class="logo" style="margin-left: 500px">
+				<a href="${pageContext.request.contextPath }/index"><img
+					src="images/logo.png" /></a>
+			</div>
+			<c:if test="${checkBuyCar }" var="fla">
 				<!-- 购物车有信息 -->
 				<div class="i_car">
 					<div class="car_t">
-						<a href="${pageContext.request.contextPath}/show">购物车
-							[ <span>${tAmount }</span> ]
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${tAmount }</span>
+							]
 						</a>
 					</div>
 					<div class="car_bg">
@@ -203,21 +204,20 @@
 					</div>
 				</div>
 			</c:if>
-			
+
 			<!-- 购物车没信息 -->
 			<c:if test="${not fla }">
 				<div class="i_car">
-			<div class="car_t"><a href="${pageContext.request.contextPath}/show">购物车 [
-					<span>0</span> ]
-				</a>
-			</div>
-		
-		</div>
+					<div class="car_t">
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>0</span>
+							]
+						</a>
+					</div>
+
+				</div>
 			</c:if>
+		</div>
 	</div>
-    </div>
-	
-</div>
 <!--End Header End--> 
 <div class="i_bg bg_color">
     <!--Begin 用户中心 Begin -->
@@ -237,14 +237,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
@@ -269,14 +269,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             

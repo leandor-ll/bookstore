@@ -243,7 +243,7 @@
   
   <!-- mybatis -->
   <insert id="addUser" parameterType="com.book.domain.User">
-  	insert into u_book(uid,uname,upassword,uIDcard,udentity,uprice,upic) values(${uid},#{uname},#{upassword},#{uIDcard},#{udentity},#{uprice},#{upic})
+  	insert into u_book(uid,uname,upassword,uIDcard,udentity,uprice,upic) values(#{uid},#{uname},#{upassword},#{uidcard},#{udentity},#{uprice},#{upic})
   </insert>
   
   <select id="selectUname" resultType="com.book.domain.User">
@@ -277,6 +277,19 @@
   <update id="changeDentity">
   	update u_book set udentity = 2 where uname = #{uuname}
   </update>
+  
+  <insert id="setChargeMoneyList">
+  	insert into m_book(userid,chargetime,chargenumber) values (#{arg0},#{arg1},50)
+  </insert>
+  
+  <select id="queryChargeMoneyList" resultType="com.book.domain.ChargeMoney">
+  	select * from m_book where userid = #{uuname}
+  </select>
+  
+  <delete id="deleteChargeMoneyList">
+  	delete from m_book where userid=#{arg0} and chargetime = #{arg1}
+  </delete>
+  
 </mapper>
 
 

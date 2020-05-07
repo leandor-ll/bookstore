@@ -34,39 +34,51 @@
 <script type="text/javascript" src="js/shade.js"></script>
 <script type="text/javascript">
 	jq(function() {
-		jq(".j_car")
-				.click(
-						function() {
-							var uuname = "${uuname}";
-							var uubookid = jq(this).attr("d");
-							var uusnumber = jq(".n_ipt").val();
-							jq
-									.post(
-											"${pageContext.request.contextPath}/addBuyCar",
-											{
-												"sbid" : uubookid,
-												"suid" : uuname,
-												"snum" : uusnumber
-											},
-											function(data) {
-												if (data.result) {
-													alert("添加成功");
-													window.location
-															.replace(window.location.href);
-												} else {
-													alert("您尚未登录，请登录");
-													window.location.href = "${pageContext.request.contextPath}/login";
-												}
-											}, "json")
+		jq(".n_ipt").blur(function() {
+			var uusnumber = jq(".n_ipt").val();
+			var booknumber = jq(".des_price").attr("pr");
+			if(parseInt(uusnumber)>parseInt(booknumber)){
+				alert("没有那么多库存，请重新选择购买数量");
+				jq(".n_ipt").attr("value", 1);
+			}
+		} );
+		jq(".j_car").click(function() {
+			var uuname = "${uuname}";
+			var uubookid = jq(this).attr("d");
+			var uusnumber = jq(".n_ipt").val();
+			jq.post(
+					"${pageContext.request.contextPath}/addBuyCar",
+					{
+						"sbid" : uubookid,
+						"suid" : uuname,
+						"snum" : uusnumber
+					},
+					function(data) {
+						if (data.result) {
+							alert("成功添加购物车");
+								window.location.replace(window.location.href);
+						} else {
+							alert("您尚未登录，请登录");
+							window.location.href = "${pageContext.request.contextPath}/login";
+						}
+					}, "json")
 						})
 	})
 </script>
 <script type="text/javascript">
 	jq(function() {
+		var booknumber = jq(".des_price").attr("pr");
+		if(booknumber == 0){
+			alert("该图书已售罄，正在补货中！");
+			window.location.href = "${pageContext.request.contextPath}/brandlist";
+		}
 		jq(".n_btn_1").click(function() {
 			var num = jq(".n_ipt").val();
 			jq(".n_ipt").attr("value", num);
-
+			if(parseInt(num)>parseInt(booknumber)){
+				alert("没有那么多库存，请重新选择购买数量");
+				jq(".n_ipt").attr("value", booknumber);
+			}
 		})
 		jq(".n_btn_2").click(function() {
 			var num = jq(".n_ipt").val();
@@ -74,8 +86,40 @@
 		})
 	})
 </script>
+<script type="text/javascript">
+	jq(function() {
+		
+			jq(".ss").click(function() {
+				var uuname = "${uuname}";
+				if(${empty(uuname)}){
+							alert("您尚未登录，请登录");
+							window.location.href = "${pageContext.request.contextPath}/login";
+				}
+				var uubookid = jq(this).attr("d");
+					jq.post("${pageContext.request.contextPath}/addCollect",
+						{
+						"sbid" : uubookid,
+						"suid" : uuname
+						},function(data) {
+							if (data.result) {
+								alert("收藏成功");
+								}
+								else{
+									alert("取消收藏");
+								}}, "json")
+							})
+	})
+</script>
+<script type="text/javascript">
+jq(function(){
+	jq(".getP_id").click(function(){
+		var id = jq(this).prev().val();
+		window.location.href="${pageContext.request.contextPath}/product?bid="+id;
+	})
+})
+</script>
 
-<title>尤洪</title>
+<title>博库智慧城</title>
 </head>
 <body>
 	<!--Begin Header Begin-->
@@ -106,7 +150,8 @@
 							<div class="s_city_t"></div>
 							<div class="ss_list_c">
 								<ul>
-									<li><a href="${pageContext.request.contextPath}/Member_Collect">我的收藏夹</a></li>
+									<li><a
+										href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
 								</ul>
 							</div>
 						</div>
@@ -243,7 +288,9 @@
 		<div class="menu">
 			<!--Begin 商品分类详情 Begin-->
 			<div class="nav">
-				<div class="nav_t" id="all"><a href="">全部商品分类</a></div>
+				<div class="nav_t" id="all">
+					<a href="">全部商品分类</a>
+				</div>
 			</div>
 			<!--End 商品分类详情 End-->
 			<ul class="menu_r">
@@ -285,44 +332,26 @@
 					<p>${Onelist.bname }</p>
 					“开业巨惠，北京专柜直供”，不光低价，“真”才靠谱！
 				</div>
-				<div class="des_price">
-					本店价格：<b>${Onelist.bprice }</b><br /> 消费积分：<span>28R</span>
+				<div class="des_price" pr="${Onelist.bnumber }">
+					本店价格：<b>￥${Onelist.bprice }</b><br /> 书本存货：<span><b>${Onelist.bnumber }本</b></span>
 				</div>
 				<div class="des_choice">
-					<span class="fl">型号选择：</span>
+					<span class="fl">图书类别：</span>
 					<ul>
-						<li class="checked">30ml
+						<li class="checked">${cmap[Onelist.bcategory]['category']  }
 							<div class="ch_img"></div>
 						</li>
 					</ul>
 				</div>
-				<div class="des_choice">
-					<span class="fl">颜色选择：</span>
-					<ul>
-						<li class="checked">白色
-							<div class="ch_img"></div>
-						</li>
-					</ul>
-				</div>
-
 				<div class="des_share">
-					<div class="d_sh">
-						分享
-						<div class="d_sh_bg">
-							<a href="#"><img src="images/sh_1.gif" /></a> <a href="#"><img
-								src="images/sh_2.gif" /></a> <a href="#"><img
-								src="images/sh_3.gif" /></a> <a href="#"><img
-								src="images/sh_4.gif" /></a> <a href="#"><img
-								src="images/sh_5.gif" /></a>
-						</div>
-					</div>
+
 					<div class="d_care">
-						<a onclick="ShowDiv('MyDiv','fade')">关注商品</a>
+						<a href="#" class="ss" d="${Onelist.bid }">收藏</a>
 					</div>
 				</div>
 				<div class="des_join">
 					<div class="j_nums">
-						<input type="text" value="1" name="" class="n_ipt" /> <input
+						<input type="text" value="1" name="" class="n_ipt" disabled="disabled"/> <input
 							type="button" value="" onclick="addUpdate(jq(this));"
 							class="n_btn_1" /> <input type="button" value=""
 							onclick="jianUpdate(jq(this));" class="n_btn_2" />
@@ -332,10 +361,9 @@
 				</div>
 			</div>
 
-
-			<div class="s_brand">
+			<div class="s_brand" style="height: 200px; width: 400">
 				<div class="s_brand_img">
-					<img src="images/sbrand.jpg" width="188" height="132" />
+					<img src="images/index4.jpg" width="188" height="132" />
 				</div>
 				<div class="s_brand_c">
 					<a
@@ -348,173 +376,26 @@
 			<div class="l_history">
 				<div class="fav_t">用户还喜欢</div>
 				<ul>
-					<li>
-						<div class="img">
-							<a href="#"><img src="images/his_1.jpg" width="185"
-								height="162" /></a>
-						</div>
-						<div class="name">
-							<a href="#">Dior/迪奥香水2件套装</a>
-						</div>
-						<div class="price">
-							<font>￥<span>368.00</span></font> &nbsp; 18R
-						</div>
-					</li>
-					<li>
-						<div class="img">
-							<a href="#"><img src="images/his_2.jpg" width="185"
-								height="162" /></a>
-						</div>
-						<div class="name">
-							<a href="#">Dior/迪奥香水2件套装</a>
-						</div>
-						<div class="price">
-							<font>￥<span>768.00</span></font> &nbsp; 18R
-						</div>
-					</li>
-					<li>
-						<div class="img">
-							<a href="#"><img src="images/his_3.jpg" width="185"
-								height="162" /></a>
-						</div>
-						<div class="name">
-							<a href="#">Dior/迪奥香水2件套装</a>
-						</div>
-						<div class="price">
-							<font>￥<span>680.00</span></font> &nbsp; 18R
-						</div>
-					</li>
-					<li>
-						<div class="img">
-							<a href="#"><img src="images/his_4.jpg" width="185"
-								height="162" /></a>
-						</div>
-						<div class="name">
-							<a href="#">Dior/迪奥香水2件套装</a>
-						</div>
-						<div class="price">
-							<font>￥<span>368.00</span></font> &nbsp; 18R
-						</div>
-					</li>
-					<li>
-						<div class="img">
-							<a href="#"><img src="images/his_5.jpg" width="185"
-								height="162" /></a>
-						</div>
-						<div class="name">
-							<a href="#">Dior/迪奥香水2件套装</a>
-						</div>
-						<div class="price">
-							<font>￥<span>368.00</span></font> &nbsp; 18R
-						</div>
-					</li>
+					<c:forEach items="${map }" var="m" begin="10" step="30">
+						<li>
+							<div class="img">
+								<input class="p_id" value="${m['bid'] }" type="hidden" /> <a
+									class="getP_id"><img
+									src="${pageContext.request.contextPath }/upload${m['bpic'] }"
+									width="185" height="162" /></a>
+							</div>
+							<div class="name">
+								<input class="p_id" value="${m['bid'] }" type="hidden" /> <a
+									class="getP_id">${m['bname'] }</a>
+							</div>
+							<div class="price">
+								<font>￥<span>${m['bprice'] }</span></font>
+							</div>
+						</li>
+					</c:forEach>
 				</ul>
 			</div>
 			<div class="l_list">
-				<div class="des_border">
-					<div class="des_tit">
-						<ul>
-							<li class="current">推荐搭配</li>
-						</ul>
-					</div>
-					<div class="team_list">
-						<div class="img">
-							<a href="#"><img src="images/mat_1.jpg" width="160"
-								height="140" /></a>
-						</div>
-						<div class="name">
-							<a href="#">倩碧补水组合套装8折促销</a>
-						</div>
-						<div class="price">
-							<div class="checkbox">
-								<input type="checkbox" name="zuhe" checked="checked" />
-							</div>
-							<font>￥<span>768.00</span></font> &nbsp; 18R
-						</div>
-					</div>
-					<div class="team_icon">
-						<img src="images/jia_b.gif" />
-					</div>
-					<div class="team_list">
-						<div class="img">
-							<a href="#"><img src="images/mat_2.jpg" width="160"
-								height="140" /></a>
-						</div>
-						<div class="name">
-							<a href="#">香奈儿邂逅清新淡香水50ml</a>
-						</div>
-						<div class="price">
-							<div class="checkbox">
-								<input type="checkbox" name="zuhe" />
-							</div>
-							<font>￥<span>749.00</span></font> &nbsp; 18R
-						</div>
-					</div>
-					<div class="team_icon">
-						<img src="images/jia_b.gif" />
-					</div>
-					<div class="team_list">
-						<div class="img">
-							<a href="#"><img src="images/mat_3.jpg" width="160"
-								height="140" /></a>
-						</div>
-						<div class="name">
-							<a href="#">香奈儿邂逅清新淡香水50ml</a>
-						</div>
-						<div class="price">
-							<div class="checkbox">
-								<input type="checkbox" name="zuhe" checked="checked" />
-							</div>
-							<font>￥<span>749.00</span></font> &nbsp; 18R
-						</div>
-					</div>
-					<div class="team_icon">
-						<img src="images/equl.gif" />
-					</div>
-					<div class="team_sum">
-						套餐价：￥<span>1517</span><br /> <input type="text" value="1"
-							class="sum_ipt" /><br /> <a href="#"><img
-							src="images/z_buy.gif" /></a>
-					</div>
-
-				</div>
-				<div class="des_border">
-					<div class="des_tit">
-						<ul>
-							<li class="current"><a href="#p_attribute">商品属性</a></li>
-							<li><a href="#p_details">商品详情</a></li>
-							<li><a href="#p_comment">商品评论</a></li>
-						</ul>
-					</div>
-					<div class="des_con" id="p_attribute">
-
-						<table border="0" align="center"
-							style="width: 100%; font-family: '宋体'; margin: 10px auto;"
-							cellspacing="0" cellpadding="0">
-							<tr>
-								<td>商品名称：${Onelist.bname }</td>
-								<td>商品编号：1546211</td>
-								<td>品牌： 迪奥（Dior）</td>
-								<td>上架时间：2015-09-06 09:19:09</td>
-							</tr>
-							<tr>
-								<td>商品毛重：160.00g</td>
-								<td>商品产地：法国</td>
-								<td>香调：果香调香型：淡香水/香露EDT</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td>容量：1ml-15ml</td>
-								<td>类型：女士香水，Q版香水，组合套装</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-						</table>
-
-
-					</div>
-				</div>
-
 				<div class="des_border" id="p_details">
 					<div class="des_t">商品详情</div>
 					<div class="des_con">
@@ -522,25 +403,21 @@
 							style="width: 745px; font-size: 14px; font-family: '宋体';"
 							cellspacing="0" cellpadding="0">
 							<tr>
-								<td width="265"><img src="images/de1.jpg" width="206"
-									height="412" /></td>
+								<td width="265"><img
+									src="${pageContext.request.contextPath }/upload${Onelist['bpic']}"
+									width="206" height="300" /></td>
 								<td><b>${Onelist.bname }</b><br /> 【作者】：${Onelist.bauthor }<br />
-									【出版社】：${Onelist.bpublish }<br /> 【价格】：${Onelist.bprice }<br />
-									【类别】：${cmap[Onelist.bcategory]['category'] }<br /></td>
+									【出版社】：${Onelist.bpublish }<br /> 
+									【价格】：￥${Onelist.bprice }<br />
+									【类别】：${cmap[Onelist.bcategory]['category'] }<br />
+									【库存剩余】：${Onelist.bnumber }本<br />
+								</td>
 							</tr>
 						</table>
-
-						<p align="center">
-							<img src="images/de2.jpg" width="746" height="425" /><br /> <br />
-							<img src="images/de3.jpg" width="750" height="417" /><br /> <br />
-							<img src="images/de4.jpg" width="750" height="409" /><br /> <br />
-							<img src="images/de5.jpg" width="750" height="409" />
-						</p>
-
 					</div>
 				</div>
 
-				<div class="des_border" id="p_comment">
+				<%-- <div class="des_border" id="p_comment">
 					<div class="des_t">商品评论</div>
 
 					<table border="0" class="jud_tab" cellspacing="0" cellpadding="0">
@@ -624,161 +501,154 @@
 							class="p_pre">下一页</a>
 					</div>
 
-				</div>
-
-
+				</div> --%>
 			</div>
 		</div>
-
-
-
-
-
-					<!--Begin Footer Begin -->
-					<div class="b_btm_bg bg_color">
-						<div class="b_btm">
-							<table border="0"
-								style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
-								cellspacing="0" cellpadding="0">
-								<tr>
-									<td width="72"><img src="images/b1.png" width="62"
-										height="62" /></td>
-									<td><h2>正品保障</h2>正品行货 放心购买</td>
-								</tr>
-							</table>
-							<table border="0"
-								style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
-								cellspacing="0" cellpadding="0">
-								<tr>
-									<td width="72"><img src="images/b2.png" width="62"
-										height="62" /></td>
-									<td><h2>满38包邮</h2>满38包邮 免运费</td>
-								</tr>
-							</table>
-							<table border="0"
-								style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
-								cellspacing="0" cellpadding="0">
-								<tr>
-									<td width="72"><img src="images/b3.png" width="62"
-										height="62" /></td>
-									<td><h2>天天低价</h2>天天低价 畅选无忧</td>
-								</tr>
-							</table>
-							<table border="0"
-								style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
-								cellspacing="0" cellpadding="0">
-								<tr>
-									<td width="72"><img src="images/b4.png" width="62"
-										height="62" /></td>
-									<td><h2>准时送达</h2>收货时间由你做主</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<div class="b_nav">
-						<dl>
-							<dt>
-								<a href="#">新手上路</a>
-							</dt>
-							<dd>
-								<a href="#">售后流程</a>
-							</dd>
-							<dd>
-								<a href="#">购物流程</a>
-							</dd>
-							<dd>
-								<a href="#">订购方式</a>
-							</dd>
-							<dd>
-								<a href="#">隐私声明</a>
-							</dd>
-							<dd>
-								<a href="#">推荐分享说明</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>
-								<a href="#">配送与支付</a>
-							</dt>
-							<dd>
-								<a href="#">货到付款区域</a>
-							</dd>
-							<dd>
-								<a href="#">配送支付查询</a>
-							</dd>
-							<dd>
-								<a href="#">支付方式说明</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>
-								<a href="#">会员中心</a>
-							</dt>
-							<dd>
-								<a href="#">资金管理</a>
-							</dd>
-							<dd>
-								<a href="#">我的收藏</a>
-							</dd>
-							<dd>
-								<a href="#">我的订单</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>
-								<a href="#">服务保证</a>
-							</dt>
-							<dd>
-								<a href="#">退换货原则</a>
-							</dd>
-							<dd>
-								<a href="#">售后服务保证</a>
-							</dd>
-							<dd>
-								<a href="#">产品质量保证</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>
-								<a href="#">联系我们</a>
-							</dt>
-							<dd>
-								<a href="#">网站故障报告</a>
-							</dd>
-							<dd>
-								<a href="#">购物咨询</a>
-							</dd>
-							<dd>
-								<a href="#">投诉与建议</a>
-							</dd>
-						</dl>
-						<div class="b_tel_bg">
-							<a href="#" class="b_sh1">新浪微博</a> <a href="#" class="b_sh2">腾讯微博</a>
-							<p>
-								服务热线：<br /> <span>400-123-4567</span>
-							</p>
-						</div>
-						<div class="b_er">
-							<div class="b_er_c">
-								<img src="images/er.gif" width="118" height="118" />
-							</div>
-							<img src="images/ss.png" />
-						</div>
-					</div>
-					<div class="btmbg">
-						<div class="btm">
-							备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com Copyright ©
-							2015-2018 尤洪商城网 All Rights Reserved. 复制必究 , Technical Support:
-							Dgg Group <br /> <img src="images/b_1.gif" width="98"
-								height="33" /><img src="images/b_2.gif" width="98" height="33" /><img
-								src="images/b_3.gif" width="98" height="33" /><img
-								src="images/b_4.gif" width="98" height="33" /><img
-								src="images/b_5.gif" width="98" height="33" /><img
-								src="images/b_6.gif" width="98" height="33" />
-						</div>
-					</div>
-					<!--End Footer End -->
+		<!--Begin Footer Begin -->
+		<div class="b_btm_bg bg_color">
+			<div class="b_btm">
+				<table border="0"
+					style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
+					cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="images/b1.png" width="62"
+							height="62" /></td>
+						<td><h2>正品保障</h2>正品行货 放心购买</td>
+					</tr>
+				</table>
+				<table border="0"
+					style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
+					cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="images/b2.png" width="62"
+							height="62" /></td>
+						<td><h2>满38包邮</h2>满38包邮 免运费</td>
+					</tr>
+				</table>
+				<table border="0"
+					style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
+					cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="images/b3.png" width="62"
+							height="62" /></td>
+						<td><h2>天天低价</h2>天天低价 畅选无忧</td>
+					</tr>
+				</table>
+				<table border="0"
+					style="width: 210px; height: 62px; float: left; margin-left: 75px; margin-top: 30px;"
+					cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="images/b4.png" width="62"
+							height="62" /></td>
+						<td><h2>准时送达</h2>收货时间由你做主</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="b_nav">
+			<dl>
+				<dt>
+					<a href="#">新手上路</a>
+				</dt>
+				<dd>
+					<a href="#">售后流程</a>
+				</dd>
+				<dd>
+					<a href="#">购物流程</a>
+				</dd>
+				<dd>
+					<a href="#">订购方式</a>
+				</dd>
+				<dd>
+					<a href="#">隐私声明</a>
+				</dd>
+				<dd>
+					<a href="#">推荐分享说明</a>
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<a href="#">配送与支付</a>
+				</dt>
+				<dd>
+					<a href="#">货到付款区域</a>
+				</dd>
+				<dd>
+					<a href="#">配送支付查询</a>
+				</dd>
+				<dd>
+					<a href="#">支付方式说明</a>
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<a href="#">会员中心</a>
+				</dt>
+				<dd>
+					<a href="#">资金管理</a>
+				</dd>
+				<dd>
+					<a href="#">我的收藏</a>
+				</dd>
+				<dd>
+					<a href="#">我的订单</a>
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<a href="#">服务保证</a>
+				</dt>
+				<dd>
+					<a href="#">退换货原则</a>
+				</dd>
+				<dd>
+					<a href="#">售后服务保证</a>
+				</dd>
+				<dd>
+					<a href="#">产品质量保证</a>
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					<a href="#">联系我们</a>
+				</dt>
+				<dd>
+					<a href="#">网站故障报告</a>
+				</dd>
+				<dd>
+					<a href="#">购物咨询</a>
+				</dd>
+				<dd>
+					<a href="#">投诉与建议</a>
+				</dd>
+			</dl>
+			<div class="b_tel_bg">
+				<a href="#" class="b_sh1">新浪微博</a> <a href="#" class="b_sh2">腾讯微博</a>
+				<p>
+					服务热线：<br /> <span>400-123-4567</span>
+				</p>
+			</div>
+			<div class="b_er">
+				<div class="b_er_c">
+					<img src="images/er.gif" width="118" height="118" />
 				</div>
+				<img src="images/ss.png" />
+			</div>
+		</div>
+		<div class="btmbg">
+			<div class="btm">
+				备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com Copyright © 2015-2018
+				尤洪商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
+				<img src="images/b_1.gif" width="98" height="33" /><img
+					src="images/b_2.gif" width="98" height="33" /><img
+					src="images/b_3.gif" width="98" height="33" /><img
+					src="images/b_4.gif" width="98" height="33" /><img
+					src="images/b_5.gif" width="98" height="33" /><img
+					src="images/b_6.gif" width="98" height="33" />
+			</div>
+		</div>
+		<!--End Footer End -->
+	</div>
 </body>
 
 <script src="js/ShopShow.js"></script>

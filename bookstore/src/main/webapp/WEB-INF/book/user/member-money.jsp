@@ -12,38 +12,36 @@
            EvPNG.fix('div, ul, img, li, input, a'); 
         </script>
     <![endif]-->
-    <script type="text/javascript" src="js/jquery-1.11.1.min_044d0927.js"></script>
-	<script type="text/javascript" src="js/jquery.bxslider_e88acd1b.js"></script>
         
-    <script type="text/javascript" src="${pageContext.servletContext.contextPath }/js/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="${pageContext.servletContext.contextPath }/js/menu.js"></script>    
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>    
         
-	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/js/select.js"></script>
+	<script type="text/javascript" src="js/select.js"></script>
 	<script type="text/javascript">
-	$(function() {
-		$(".j_car").click(
-			function() {
-				var uuname = "${uuname}";
-				var uubookid = $(this).attr("d");
-					$.post("${pageContext.request.contextPath}/addBuyCar",
+		jq(function(){
+			jq(".deleteChargeMoneyList").click(function(){
+				var userId = jq(this).attr("userId");
+				var chargeTime = jq(this).attr("chargeTime");
+				jq.post(
+						"${pageContext.request.contextPath}/deleteChargeMoneyList",
 						{
-							"sbid" : uubookid,
-							"suid" : uuname
-							},function(data) {
-								if (data.result) {
-									alert("添加成功");
-									window.location.replace(window.location.href);
-										} else {
-											alert("您尚未登录，请登录");
-											window.location.href = "${pageContext.request.contextPath}/login";
-												}
-										}, "json")
-									})
-								})
-</script>
+							"userId" : userId,
+							"chargeTime" : chargeTime
+						},
+						function(data){
+							if (data.result) {
+								alert("已删除该充值信息");
+								window.location.replace(window.location.href);
+							}
+							
+						}
+						,"json");
+			})	
+		})
+	</script>
         
     
-<title>尤洪</title>
+<title>博库智慧城</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -70,13 +68,12 @@
 					</c:if> 
         	<span class="ss">
             	<div class="ss_list">
-                	<a >收藏夹</a>
+                	<a href="#">收藏夹</a>
                     <div class="ss_list_bg">
                     	<div class="s_city_t"></div>
                         <div class="ss_list_c">
                         	<ul>
-                            	<li><a href="#">我的收藏夹</a></li>
-                                <li><a href="#">我的收藏夹</a></li>
+                            	<li><a href="${pageContext.request.contextPath}/member-collect">我的收藏夹</a></li>
                             </ul>
                         </div>
                     </div>     
@@ -114,50 +111,16 @@
     </div>
 </div>
 <div class="m_top_bg">
-	<div class="top">
-		<div class="logo">
-			<a href="${pageContext.request.contextPath }/index"><img
-				src="images/logo.png" /></a>
-		</div>
-		<div class="search">
-			<form action="${pageContext.request.contextPath }/brandlist">
-				<input type="text" name="bname" value="${param.bname }" class="s_ipt" />
-				<input type="submit" value="搜索" class="s_btn" />
-			</form>
-			<span class="fl"><a href="#">趣味物理学</a><a href="#">Python编程</a><a
-				href="#">算法导论</a><a href="#">零基础学C语言</a><a href="#">牛津高阶</a><a
-				href="#">小王子</a></span>
-		</div>
-
-		<!-- 购物车显示信息 -->
-		<c:if test="${empty(uuname) }" var="flag">
-			<div class="i_car">
-				<div class="car_t">
-					购物车 [ <span>0</span> ]
-				</div>
-				<div class="car_bg" style="width: 27 0px; height: 90px;">
-					<!--Begin 购物车未登录 Begin-->
-					<div
-						style="text-align: center; margin-left: 5px; font-size: 16px; margin-top: 20px">
-						请 <a href="${pageContext.request.contextPath}/login"
-							style="color: #FF3200"> 登录</a> 后查询购物车
-					</div>
-					<!--End 购物车未登录 End-->
-					<!--Begin 购物车已登录 Begin-->
-
-					<div class="price_a">
-						<a href="#">去购物车结算</a>
-					</div>
-					<!--End 购物车已登录 End-->
-				</div>
+		<div class="top">
+			<div class="logo" style="margin-left: 500px">
+				<a href="${pageContext.request.contextPath }/index"><img
+					src="images/logo.png" /></a>
 			</div>
-		</c:if>
-		<c:if test="${not flag }">
 			<c:if test="${checkBuyCar }" var="fla">
 				<!-- 购物车有信息 -->
 				<div class="i_car">
 					<div class="car_t">
-						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${ttAmount }</span>
+						<a href="${pageContext.request.contextPath}/show">购物车 [ <span>${tAmount }</span>
 							]
 						</a>
 					</div>
@@ -207,10 +170,8 @@
 
 				</div>
 			</c:if>
-		</c:if>
+		</div>
 	</div>
-	
-</div>
 <!--End Header End--> 
 <div class="i_bg bg_color">
     <!--Begin 用户中心 Begin -->
@@ -230,14 +191,14 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
@@ -262,50 +223,57 @@
             <div class="left_m">
             	<div class="left_m_t t_bg2">会员中心</div>
                 <ul>
-                	<li><a href="${pageContext.request.contextPath}/memberuser" class="now">用户信息</a></li>
-                	<li><a href="${pageContext.request.contextPath}/Member_Collect" class="now">我的收藏</a></li>
+                	<li><a href="${pageContext.request.contextPath}/memberuser" >用户信息</a></li>
+                	<li><a href="${pageContext.request.contextPath}/member-collect" >我的收藏</a></li>
                 </ul>
             </div>
             <div class="left_m">
             	<div class="left_m_t t_bg3">账户中心</div>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/Member_Money">资金管理</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member-money">资金管理</a></li>
                 </ul>
             </div>
             
             </c:if>
         </div>
 		<div class="m_right">
-            <p></p>
+            <p></p>			
             <div class="mem_tit">
-            	<span class="fr" style="font-size:12px; color:#55555; font-family:'宋体'; margin-top:5px;">共发现${tAmount }件</span>我的收藏
+            	<span class="fr" style="font-size:12px; color:#55555; font-family:'宋体'; margin-top:5px;">您当前的可用资金为：￥${userPrice }</span><font color="#ff4e00"><b>充值详情</b></font>
             </div>
-           	<table border="0" class="order_tab" style="width:930px;" cellspacing="0" cellpadding="0">
-              <tr>                                                                                                                                       
-                <td align="center" width="420">商品名称</td>
-                <td align="center" width="180">价格</td>
-                <td align="center" width="270">操作</td>
-              </tr>
-              <c:if test="${empty(collectList) }" var="ooo">
-              		<td colspan="5" ><img src="${pageContext.request.contextPath }/images/ordernull.jpg"></td>
-              </c:if>
-              <c:if test="${not ooo }">
-              <c:forEach items="${collectList }" var="enshrineBookService">
+			<table border="0" class="ma_tab" style="width:930px; text-align:center; margin-bottom:30px;" cellspacing="0" cellpadding="0">
               <tr>
-                <td style="font-family:'宋体';">
-                	<div class="sm_img"><img src="${pageContext.request.contextPath }/upload${enshrineBookService.epic }" width="48" height="48" /></div>${enshrineBookService.ebname }
-                </td>
-                <td align="center">￥${enshrineBookService.eprice }</td>
-                <td align="center"><!-- <a href="#">关注</a> -->&nbsp; &nbsp; 
-                	<a  style="color:#ff4e00;" class="j_car" d="${enshrineBookService.ebid }">加入购物车</a>&nbsp; &nbsp;
-                 	<a href="${pageContext.request.contextPath}/delCollect?sbid=${enshrineBookService.ebid }&suid=${enshrineBookService.euname }">删除</a></td>
+              	<td class="ma_a" colspan="7" align="right">|<a href="${pageContext.request.contextPath}/alipay.trade.page.pay">充值</a>|</td>
               </tr>
-              </c:forEach>
+              <c:if test="${empty(chargeMoneyList) }" var="noCharge">
+              
+              <tr>
+                	<td colspan="4" height="100"><h1 style="color: red">&nbsp;当前没有任何充值信息！</h1></td>
+              </tr>
               </c:if>
-            </table>
-
-
-            
+              <c:if test="${not noCharge }">
+              <tr>                                                                                                                                                    
+                <td width="155">操作时间</td>                                                                                                                                         
+                <td width="110">类型</td>
+                <td width="110">金额</td>
+                <td width="140">操作</td>
+              </tr>
+              <c:forEach items="${chargeMoneyList }" var="chargeMoneyList">
+               <tr>
+                	<td style="font-weight: bold;">&nbsp;${chargeMoneyList.chargeTime}</td>
+                	<td style="font-weight: bold;">&nbsp;充值</td>
+                	<td style="font-weight: bold;">&nbsp;50</td>
+                	<td>
+                		<a style="color: red" class="deleteChargeMoneyList" userId="${chargeMoneyList.userId}" chargeTime="${chargeMoneyList.chargeTime}">&nbsp;删除</a>
+                	</td>
+              	</tr>
+              	</c:forEach>
+              </c:if>
+              <!-- <tr>
+                <td colspan="4" align="right"></td>
+              </tr> -->
+			</table>
+			
         </div>
     </div>
 	<!--End 用户中心 End--> 
